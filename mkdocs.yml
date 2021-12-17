@@ -1,4 +1,4 @@
-site_name: "Legacy Python handler for mkdocstrings."
+site_name: "mkdocstrings-python (legacy)"
 site_description: "A legacy Python handler for mkdocstrings."
 site_url: "https://mkdocstrings.github.io/python-legacy"
 repo_url: "https://github.com/mkdocstrings/python-legacy"

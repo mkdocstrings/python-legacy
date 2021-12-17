@@ -1,4 +1,4 @@
-# Legacy Python handler for mkdocstrings.
+# mkdocstrings-python (legacy)
 
 [![ci](https://github.com/mkdocstrings/python-legacy/workflows/ci/badge.svg)](https://github.com/mkdocstrings/python-legacy/actions?query=workflow%3Aci)
 [![documentation](https://img.shields.io/badge/docs-mkdocs%20material-blue.svg?style=flat)](https://mkdocstrings.github.io/python-legacy/)
@@ -10,7 +10,7 @@ A legacy Python handler for mkdocstrings.
 
 ## Requirements
 
-Legacy Python handler for mkdocstrings. requires Python 3.6 or above.
+mkdocstrings-python (legacy) requires Python 3.6 or above.
 
 <details>
 <summary>To install Python 3.6, I recommend using <a href="https://github.com/pyenv/pyenv"><code>pyenv</code></a>.</summary>
