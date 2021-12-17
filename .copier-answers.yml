@@ -8,12 +8,12 @@ copyright_date: '2021'
 copyright_holder: "Timoth\xE9e Mazzucotelli"
 copyright_holder_email: pawamoy@pm.me
 copyright_license: ISC License
-project_description: A Python handler for mkdocstrings.
-project_name: Python for mkdocstrings
-python_package_command_line_name: mkdocstrings-python
-python_package_distribution_name: mkdocstrings-python
+project_description: A legacy Python handler for mkdocstrings.
+project_name: Legacy Python handler for mkdocstrings.
+python_package_command_line_name: mkdocstrings-python-legacy
+python_package_distribution_name: mkdocstrings-python-legacy
 python_package_import_name: mkdocstrings
-repository_name: python
+repository_name: python-legacy
 repository_namespace: mkdocstrings
 repository_provider: github.com
 use_precommit: false

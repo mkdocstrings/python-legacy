@@ -10,7 +10,7 @@ Nothing easier!
 Fork and clone the repository, then:
 
 ```bash
-cd python
+cd python-legacy
 make setup
 ```
 
@@ -31,8 +31,6 @@ make setup
     or simply `pdm install`.
 
 You now have the dependencies installed.
-
-You can run the application with `pdm run mkdocstrings-python [ARGS...]`.
 
 Run `make help` to see all the available actions!
 
