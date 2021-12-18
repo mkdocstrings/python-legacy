@@ -1,7 +1,7 @@
 """This module implements a handler for the Python language."""
 
 import posixpath
-from typing import Any, BinaryIO, Iterator, Optional, Tuple
+from typing import Any, BinaryIO, Iterator, List, Optional, Tuple
 
 from mkdocstrings.handlers.base import BaseHandler
 from mkdocstrings.handlers.python.collector import PythonCollector

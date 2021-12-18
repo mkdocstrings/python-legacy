@@ -1,48 +1,17 @@
 """This module implements a renderer for the Python language."""
 
-import json
-import os
-import posixpath
 import sys
-import traceback
 from collections import ChainMap
-from subprocess import PIPE, Popen  # noqa: S404 (what other option, more secure that PIPE do we have? sockets?)
-from typing import Any, BinaryIO, Callable, Iterator, List, Optional, Sequence, Tuple
+from typing import Any, Callable, Sequence
 
 from markdown import Markdown
 from markupsafe import Markup
 
 from mkdocstrings.extension import PluginError
-from mkdocstrings.handlers.base import BaseCollector, BaseHandler, BaseRenderer, CollectionError, CollectorItem
-from mkdocstrings.inventory import Inventory
+from mkdocstrings.handlers.base import BaseRenderer, CollectorItem
 from mkdocstrings.loggers import get_logger
 
 log = get_logger(__name__)
-
-
-class Order(enum.Enum):
-    """Enumeration for the possible members ordering."""
-
-    alphabetical = "alphabetical"
-    source = "source"
-
-
-def _sort_key_alphabetical(item: CollectorItem) -> Any:
-    # chr(sys.maxunicode) is a string that contains the final unicode
-    # character, so if 'name' isn't found on the object, the item will go to
-    # the end of the list.
-    return item.name or chr(sys.maxunicode)
-
-
-def _sort_key_source(item: CollectorItem) -> Any:
-    # if 'lineno' is none, the item will go to the start of the list.
-    return item.lineno if item.lineno is not None else -1
-
-
-order_map = {
-    Order.alphabetical: _sort_key_alphabetical,
-    Order.source: _sort_key_source,
-}
 
 
 class PythonRenderer(BaseRenderer):
@@ -131,7 +100,14 @@ class PythonRenderer(BaseRenderer):
         self.env.filters["brief_xref"] = self.do_brief_xref
 
     def do_brief_xref(self, path: str) -> Markup:
-        """Filter to create cross-reference with brief text and full identifier as hover text."""
+        """Filter to create cross-reference with brief text and full identifier as hover text.
+
+        Arguments:
+            path: The path to shorten and render.
+
+        Returns:
+            A span containing the brief cross-reference and the full one on hover.
+        """
         brief = path.split(".")[-1]
         return Markup("<span data-autorefs-optional-hover={path}>{brief}</span>").format(path=path, brief=brief)
 
@@ -155,7 +131,6 @@ def sort_object(obj: CollectorItem, sort_function: Callable[[CollectorItem], Any
 
 
 def _sort_key_alphabetical(item: CollectorItem) -> Any:
-    """Return a sort key for 'alphabetical' sorting of CollectorItems."""
     # chr(sys.maxunicode) is a string that contains the final unicode
     # character, so if 'name' isn't found on the object, the item will go to
     # the end of the list.
@@ -163,7 +138,6 @@ def _sort_key_alphabetical(item: CollectorItem) -> Any:
 
 
 def _sort_key_source(item: CollectorItem) -> Any:
-    """Return a sort key for 'source' sorting of CollectorItems."""
     # if 'line_start' isn't found on the object, the item will go to
     # the start of the list.
     return item.get("source", {}).get("line_start", -1)

@@ -5,19 +5,13 @@ It collects data with [`pytkdocs`](https://github.com/pawamoy/pytkdocs).
 
 import json
 import os
-import posixpath
 import sys
 import traceback
 from collections import ChainMap
 from subprocess import PIPE, Popen  # noqa: S404 (what other option, more secure that PIPE do we have? sockets?)
-from typing import Any, BinaryIO, Callable, Iterator, List, Optional, Sequence, Tuple
+from typing import List, Optional
 
-from markdown import Markdown
-from markupsafe import Markup
-
-from mkdocstrings.extension import PluginError
-from mkdocstrings.handlers.base import BaseCollector, BaseHandler, BaseRenderer, CollectionError, CollectorItem
-from mkdocstrings.inventory import Inventory
+from mkdocstrings.handlers.base import BaseCollector, CollectionError, CollectorItem
 from mkdocstrings.loggers import get_logger
 
 log = get_logger(__name__)
