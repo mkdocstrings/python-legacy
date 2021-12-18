@@ -66,8 +66,13 @@ plugins:
     - docs/gen_ref_nav.py
 - literate-nav:
     nav_file: SUMMARY.md
+- section-index
 - coverage
 - mkdocstrings:
+    handlers:
+      python:
+        import:
+        - https://mkdocstrings.github.io/objects.inv
     watch:
     - src/mkdocstrings
 
