@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://mkdocstrings.github.io/python-legacy/reference/mkdocstrings/handlers/python/renderer/">
       
       <link rel="icon" href="../../../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.2">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.f7951f6f.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.edf004c2.min.css">
       
         
         <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -527,123 +527,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../collector/" class="md-nav__link">
-        collector
-      </a>
-    </li>
-  
-
-            
           
-            
-              
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          renderer
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        renderer
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#mkdocstrings.handlers.python.renderer" class="md-nav__link">
-    mkdocstrings.handlers.python.renderer
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mkdocstrings.handlers.python.renderer.PythonRenderer" class="md-nav__link">
-    PythonRenderer
-  </a>
-  
-    <nav class="md-nav" aria-label="PythonRenderer">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#mkdocstrings.handlers.python.renderer.PythonRenderer.default_config" class="md-nav__link">
-    default_config
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mkdocstrings.handlers.python.renderer.PythonRenderer.do_brief_xref" class="md-nav__link">
-    do_brief_xref()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mkdocstrings.handlers.python.renderer.PythonRenderer.get_anchors" class="md-nav__link">
-    get_anchors()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mkdocstrings.handlers.python.renderer.PythonRenderer.render" class="md-nav__link">
-    render()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mkdocstrings.handlers.python.renderer.PythonRenderer.update_env" class="md-nav__link">
-    update_env()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mkdocstrings.handlers.python.renderer.sort_object" class="md-nav__link">
-    sort_object()
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
             
           
         </ul>
@@ -929,6 +813,108 @@ see <a href="https://mkdocstrings.github.io/reference/handlers/python/#mkdocstri
       </tr>
   </tbody>
 </table>
+        <details class="quote">
+          <summary>Source code in <code>python/renderer.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PythonRenderer</span><span class="p">(</span><span class="n">BaseRenderer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The class responsible for loading Jinja templates and rendering them.</span>
+
+<span class="sd">    It defines some configuration options, implements the `render` method,</span>
+<span class="sd">    and overrides the `update_env` method of the [`BaseRenderer` class][mkdocstrings.handlers.base.BaseRenderer].</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        fallback_theme: The theme to fallback to.</span>
+<span class="sd">        default_config: The default rendering options,</span>
+<span class="sd">            see [`default_config`][mkdocstrings.handlers.python.PythonRenderer.default_config].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">fallback_theme</span> <span class="o">=</span> <span class="s2">&quot;material&quot;</span>
+
+    <span class="n">default_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;show_root_heading&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">&quot;show_root_toc_entry&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;show_root_full_path&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;show_root_members_full_path&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">&quot;show_object_full_path&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">&quot;show_category_heading&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">&quot;show_if_no_docstring&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">&quot;show_signature&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;show_signature_annotations&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">&quot;show_source&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;show_bases&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;group_by_category&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;heading_level&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;members_order&quot;</span><span class="p">:</span> <span class="s2">&quot;alphabetical&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="sd">&quot;&quot;&quot;The default rendering options.</span>
+
+<span class="sd">    Option | Type | Description | Default</span>
+<span class="sd">    ------ | ---- | ----------- | -------</span>
+<span class="sd">    **`show_root_heading`** | `bool` | Show the heading of the object at the root of the documentation tree. | `False`</span>
+<span class="sd">    **`show_root_toc_entry`** | `bool` | If the root heading is not shown, at least add a ToC entry for it. | `True`</span>
+<span class="sd">    **`show_root_full_path`** | `bool` | Show the full Python path for the root object heading. | `True`</span>
+<span class="sd">    **`show_object_full_path`** | `bool` | Show the full Python path of every object. | `False`</span>
+<span class="sd">    **`show_root_members_full_path`** | `bool` | Show the full Python path of objects that are children of the root object (for example, classes in a module). When False, `show_object_full_path` overrides. | `False`</span>
+<span class="sd">    **`show_category_heading`** | `bool` | When grouped by categories, show a heading for each category. | `False`</span>
+<span class="sd">    **`show_if_no_docstring`** | `bool` | Show the object heading even if it has no docstring or children with docstrings. | `False`</span>
+<span class="sd">    **`show_signature`** | `bool` | Show method and function signatures. | `True`</span>
+<span class="sd">    **`show_signature_annotations`** | `bool` | Show the type annotations in method and function signatures. | `False`</span>
+<span class="sd">    **`show_source`** | `bool` | Show the source code of this object. | `True`</span>
+<span class="sd">    **`show_bases`** | `bool` | Show the base classes of a class. | `True`</span>
+<span class="sd">    **`group_by_category`** | `bool` | Group the object&#39;s children by categories: attributes, classes, functions, methods, and modules. | `True`</span>
+<span class="sd">    **`heading_level`** | `int` | The initial heading level to use. | `2`</span>
+<span class="sd">    **`members_order`** | `str` | The members ordering to use. Options: `alphabetical` - order by the members names, `source` - order members as they appear in the source file. | `alphabetical`</span>
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">CollectorItem</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>  <span class="c1"># noqa: D102 (ignore missing docstring)</span>
+        <span class="n">final_config</span> <span class="o">=</span> <span class="n">ChainMap</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_config</span><span class="p">)</span>
+
+        <span class="n">template</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.html&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Heading level is a &quot;state&quot; variable, that will change at each step</span>
+        <span class="c1"># of the rendering recursion. Therefore, it&#39;s easier to use it as a plain value</span>
+        <span class="c1"># than as an item in a dictionary.</span>
+        <span class="n">heading_level</span> <span class="o">=</span> <span class="n">final_config</span><span class="p">[</span><span class="s2">&quot;heading_level&quot;</span><span class="p">]</span>
+        <span class="n">members_order</span> <span class="o">=</span> <span class="n">final_config</span><span class="p">[</span><span class="s2">&quot;members_order&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">members_order</span> <span class="o">==</span> <span class="s2">&quot;alphabetical&quot;</span><span class="p">:</span>
+            <span class="n">sort_function</span> <span class="o">=</span> <span class="n">_sort_key_alphabetical</span>
+        <span class="k">elif</span> <span class="n">members_order</span> <span class="o">==</span> <span class="s2">&quot;source&quot;</span><span class="p">:</span>
+            <span class="n">sort_function</span> <span class="o">=</span> <span class="n">_sort_key_source</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PluginError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown members_order &#39;</span><span class="si">{</span><span class="n">members_order</span><span class="si">}</span><span class="s2">&#39;, choose between &#39;alphabetical&#39; and &#39;source&#39;.&quot;</span><span class="p">)</span>
+
+        <span class="n">sort_object</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">sort_function</span><span class="o">=</span><span class="n">sort_function</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
+            <span class="o">**</span><span class="p">{</span><span class="s2">&quot;config&quot;</span><span class="p">:</span> <span class="n">final_config</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]:</span> <span class="n">data</span><span class="p">,</span> <span class="s2">&quot;heading_level&quot;</span><span class="p">:</span> <span class="n">heading_level</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_anchors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">CollectorItem</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>  <span class="c1"># noqa: D102 (ignore missing docstring)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">],)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">update_env</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">md</span><span class="p">:</span> <span class="n">Markdown</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># noqa: D102 (ignore missing docstring)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">update_env</span><span class="p">(</span><span class="n">md</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">trim_blocks</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">lstrip_blocks</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">keep_trailing_newline</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">filters</span><span class="p">[</span><span class="s2">&quot;brief_xref&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_brief_xref</span>
+
+    <span class="k">def</span> <span class="nf">do_brief_xref</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Markup</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Filter to create cross-reference with brief text and full identifier as hover text.</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            path: The path to shorten and render.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A span containing the brief cross-reference and the full one on hover.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">brief</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">Markup</span><span class="p">(</span><span class="s2">&quot;&lt;span data-autorefs-optional-hover=</span><span class="si">{path}</span><span class="s2">&gt;</span><span class="si">{brief}</span><span class="s2">&lt;/span&gt;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">brief</span><span class="o">=</span><span class="n">brief</span><span class="p">)</span>
+</code></pre></div>
+        </details>
 
 
 
@@ -1005,9 +991,15 @@ see <a href="https://mkdocstrings.github.io/reference/handlers/python/#mkdocstri
 <td><code>False</code></td>
 </tr>
 <tr>
+<td><strong><code>show_signature</code></strong></td>
+<td><code>bool</code></td>
+<td>Show method and function signatures.</td>
+<td><code>True</code></td>
+</tr>
+<tr>
 <td><strong><code>show_signature_annotations</code></strong></td>
 <td><code>bool</code></td>
-<td>Show the type annotations in methods and functions signatures.</td>
+<td>Show the type annotations in method and function signatures.</td>
 <td><code>False</code></td>
 </tr>
 <tr>
@@ -1507,7 +1499,7 @@ of <a href="https://mkdocstrings.github.io/reference/plugin/#mkdocstrings.plugin
     <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.tabs", "navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../../../assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.649a939e.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.e1a181d9.min.js"></script>
       
     
   </body>

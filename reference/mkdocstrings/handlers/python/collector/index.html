@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://mkdocstrings.github.io/python-legacy/reference/mkdocstrings/handlers/python/collector/">
       
       <link rel="icon" href="../../../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.2">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.f7951f6f.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.edf004c2.min.css">
       
         
         <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -527,123 +527,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-              
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          collector
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        collector
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#mkdocstrings.handlers.python.collector" class="md-nav__link">
-    mkdocstrings.handlers.python.collector
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mkdocstrings.handlers.python.collector.PythonCollector" class="md-nav__link">
-    PythonCollector
-  </a>
-  
-    <nav class="md-nav" aria-label="PythonCollector">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#mkdocstrings.handlers.python.collector.PythonCollector.default_config" class="md-nav__link">
-    default_config
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mkdocstrings.handlers.python.collector.PythonCollector.fallback_config" class="md-nav__link">
-    fallback_config
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mkdocstrings.handlers.python.collector.PythonCollector.__init__" class="md-nav__link">
-    __init__()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mkdocstrings.handlers.python.collector.PythonCollector.collect" class="md-nav__link">
-    collect()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mkdocstrings.handlers.python.collector.PythonCollector.teardown" class="md-nav__link">
-    teardown()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mkdocstrings.handlers.python.collector.rebuild_category_lists" class="md-nav__link">
-    rebuild_category_lists()
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-            
           
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../renderer/" class="md-nav__link">
-        renderer
-      </a>
-    </li>
-  
-
             
           
         </ul>
@@ -907,6 +791,170 @@ PythonCollector            (<a title="mkdocstrings.handlers.base.BaseCollector" 
 <p>It defines some configuration options, implements the <code>render</code> method,
 and overrides the <code>update_env</code> method of the <a href="https://mkdocstrings.github.io/reference/handlers/base/#mkdocstrings.handlers.base.BaseRenderer"><code>BaseRenderer</code> class</a>.</p>
 
+        <details class="quote">
+          <summary>Source code in <code>python/collector.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PythonCollector</span><span class="p">(</span><span class="n">BaseCollector</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The class responsible for loading Jinja templates and rendering them.</span>
+
+<span class="sd">    It defines some configuration options, implements the `render` method,</span>
+<span class="sd">    and overrides the `update_env` method of the [`BaseRenderer` class][mkdocstrings.handlers.base.BaseRenderer].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">default_config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;filters&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;!^_[^_]&quot;</span><span class="p">]}</span>
+    <span class="sd">&quot;&quot;&quot;The default selection options.</span>
+
+<span class="sd">    Option | Type | Description | Default</span>
+<span class="sd">    ------ | ---- | ----------- | -------</span>
+<span class="sd">    **`filters`** | `List[str]` | Filter members with regular expressions. | `[ &quot;!^_[^_]&quot; ]`</span>
+<span class="sd">    **`members`** | `Union[bool, List[str]]` | Explicitly select the object members. | *`pytkdocs` default: `True`*</span>
+
+<span class="sd">    If `members` is a list of names, filters are applied only on the members children (not the members themselves).</span>
+<span class="sd">    If `members` is `False`, none are selected.</span>
+<span class="sd">    If `members` is `True` or an empty list, filters are applied on all members and their children.</span>
+
+<span class="sd">    Members affect only the first layer of objects, while filters affect the whole object-tree recursively.</span>
+
+<span class="sd">    Every filters is run against every object name. An object can be un-selected by a filter and re-selected by the</span>
+<span class="sd">    next one:</span>
+
+<span class="sd">    - `&quot;!^_&quot;`: exclude all objects starting with an underscore</span>
+<span class="sd">    - `&quot;^__&quot;`: but select all objects starting with **two** underscores</span>
+
+<span class="sd">    Obviously one could use a single filter instead: `&quot;!^_[^_]&quot;`, which is the default.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">fallback_config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;docstring_style&quot;</span><span class="p">:</span> <span class="s2">&quot;markdown&quot;</span><span class="p">,</span> <span class="s2">&quot;filters&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;!.*&quot;</span><span class="p">]}</span>
+    <span class="sd">&quot;&quot;&quot;The configuration used when falling back to re-collecting an object to get its anchor.</span>
+
+<span class="sd">    This configuration is used in [`Handlers.get_anchors`][mkdocstrings.handlers.base.Handlers.get_anchors].</span>
+
+<span class="sd">    When trying to fix (optional) cross-references, the autorefs plugin will try to collect</span>
+<span class="sd">    an object with every configured handler until one succeeds. It will then try to get</span>
+<span class="sd">    an anchor for it. It&#39;s because objects can have multiple identifiers (aliases),</span>
+<span class="sd">    for example their definition path and multiple import paths in Python.</span>
+
+<span class="sd">    When re-collecting the object, we have no use for its members, or for its docstring being parsed.</span>
+<span class="sd">    This is why the fallback configuration filters every member out, and uses the Markdown style,</span>
+<span class="sd">    which we know will not generate any warnings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">setup_commands</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Initialize the object.</span>
+
+<span class="sd">        When instantiating a Python collector, we open a subprocess in the background with `subprocess.Popen`.</span>
+<span class="sd">        It will allow us to feed input to and read output from this subprocess, keeping it alive during</span>
+<span class="sd">        the whole documentation generation. Spawning a new Python subprocess for each &quot;autodoc&quot; instruction would be</span>
+<span class="sd">        too resource intensive, and would slow down `mkdocstrings` a lot.</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            setup_commands: A list of python commands as strings to be executed in the subprocess before `pytkdocs`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Opening &#39;pytkdocs&#39; subprocess&quot;</span><span class="p">)</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">env</span><span class="p">[</span><span class="s2">&quot;PYTHONUNBUFFERED&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+
+        <span class="k">if</span> <span class="n">setup_commands</span><span class="p">:</span>
+            <span class="c1"># prevent the Python interpreter or the setup commands</span>
+            <span class="c1"># from writing to stdout as it would break pytkdocs output</span>
+            <span class="n">commands</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="s2">&quot;import sys&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;from io import StringIO&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;from pytkdocs.cli import main as pytkdocs&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sys.stdout = StringIO()&quot;</span><span class="p">,</span>  <span class="c1"># redirect stdout to memory buffer</span>
+                <span class="o">*</span><span class="n">setup_commands</span><span class="p">,</span>
+                <span class="s2">&quot;sys.stdout.flush()&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sys.stdout = sys.__stdout__&quot;</span><span class="p">,</span>  <span class="c1"># restore stdout</span>
+                <span class="s2">&quot;pytkdocs([&#39;--line-by-line&#39;])&quot;</span><span class="p">,</span>
+            <span class="p">]</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">commands</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pytkdocs&quot;</span><span class="p">,</span> <span class="s2">&quot;--line-by-line&quot;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">process</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">(</span>  <span class="c1"># noqa: S603,S607 (we trust the input, and we don&#39;t want to use the absolute path)</span>
+            <span class="n">cmd</span><span class="p">,</span>
+            <span class="n">universal_newlines</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span>
+            <span class="n">stdin</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span>
+            <span class="n">bufsize</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">collect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CollectorItem</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Collect the documentation tree given an identifier and selection options.</span>
+
+<span class="sd">        In this method, we feed one line of JSON to the standard input of the subprocess that was opened</span>
+<span class="sd">        during instantiation of the collector. Then we read one line of JSON on its standard output.</span>
+
+<span class="sd">        We load back the JSON text into a Python dictionary.</span>
+<span class="sd">        If there is a decoding error, we log it as error and raise a CollectionError.</span>
+
+<span class="sd">        If the dictionary contains an `error` key, we log it  as error (with the optional `traceback` value),</span>
+<span class="sd">        and raise a CollectionError.</span>
+
+<span class="sd">        If the dictionary values for keys `loading_errors` and `parsing_errors` are not empty,</span>
+<span class="sd">        we log them as warnings.</span>
+
+<span class="sd">        Then we pick up the only object within the `objects` list (there&#39;s always only one, because we collect</span>
+<span class="sd">        them one by one), rebuild it&#39;s categories lists</span>
+<span class="sd">        (see [`rebuild_category_lists()`][mkdocstrings.handlers.python.rebuild_category_lists]),</span>
+<span class="sd">        and return it.</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            identifier: The dotted-path of a Python object available in the Python path.</span>
+<span class="sd">            config: Selection options, used to alter the data collection done by `pytkdocs`.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            CollectionError: When there was a problem collecting the object documentation.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The collected object-tree.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">final_config</span> <span class="o">=</span> <span class="n">ChainMap</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_config</span><span class="p">)</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Preparing input&quot;</span><span class="p">)</span>
+        <span class="n">json_input</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;objects&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">identifier</span><span class="p">,</span> <span class="o">**</span><span class="n">final_config</span><span class="p">}]})</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Writing to process&#39; stdin&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json_input</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>  <span class="c1"># type: ignore</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Reading process&#39; stdout&quot;</span><span class="p">)</span>
+        <span class="n">stdout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>  <span class="c1"># type: ignore</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Loading JSON output as Python object&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">stdout</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">JSONDecodeError</span> <span class="k">as</span> <span class="n">exception</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="s2">&quot;Error while loading JSON:&quot;</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span>
+            <span class="k">raise</span> <span class="n">CollectionError</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">exception</span>
+
+        <span class="n">error</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;traceback&quot;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">error</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;traceback&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">raise</span> <span class="n">CollectionError</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">loading_error</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;loading_errors&quot;</span><span class="p">]:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">loading_error</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">errors</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;parsing_errors&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">parsing_error</span> <span class="ow">in</span> <span class="n">errors</span><span class="p">:</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">parsing_error</span><span class="p">)</span>
+
+        <span class="c1"># We always collect only one object at a time</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;objects&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Rebuilding categories and children lists&quot;</span><span class="p">)</span>
+        <span class="n">rebuild_category_lists</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">teardown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Terminate the opened subprocess, set it to `None`.&quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Tearing process down&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+</code></pre></div>
+        </details>
 
 
 
@@ -1462,7 +1510,7 @@ and <code>modules</code>. It replaces the values in category lists with only the
     <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.tabs", "navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../../../assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.649a939e.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.e1a181d9.min.js"></script>
       
     
   </body>
