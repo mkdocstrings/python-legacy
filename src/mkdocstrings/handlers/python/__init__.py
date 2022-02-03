@@ -1,6 +1,7 @@
 """This module implements a handler for the Python language."""
 
 import posixpath
+import warnings
 from typing import Any, BinaryIO, Iterator, List, Optional, Tuple
 
 from mkdocstrings.handlers.base import BaseHandler
@@ -8,6 +9,16 @@ from mkdocstrings.handlers.python.collector import PythonCollector
 from mkdocstrings.handlers.python.renderer import PythonRenderer
 from mkdocstrings.inventory import Inventory
 from mkdocstrings.loggers import get_logger
+
+warnings.warn(
+    "The 'python-legacy' extra of mkdocstrings will become mandatory in the next release. "
+    "We have no way to detect if you already specify it, so if you do, please ignore "
+    "this warning. You can globally disable it with the PYTHONWARNINGS environment variable: "
+    "PYTHONWARNINGS=ignore::UserWarning:mkdocstrings.handlers.python",
+    UserWarning,
+)
+
+# TODO: add a deprecation warning once the new handler handles 95% of use-cases
 
 log = get_logger(__name__)
 
