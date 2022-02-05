@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.2.1](https://github.com/mkdocstrings/python-legacy/releases/tag/0.2.1) - 2022-02-05
+
+<small>[Compare with 0.2.0](https://github.com/mkdocstrings/python-legacy/compare/0.2.0...0.2.1)</small>
+
+### Dependencies
+- Require at least mkdocstrings 0.18 ([09d8e9c](https://github.com/mkdocstrings/python-legacy/commit/09d8e9c4a3d8aaf4ee1d95a702d4ad3c5b46638e) by Timothée Mazzucotelli).
+
+
 ## [0.2.0](https://github.com/mkdocstrings/python-legacy/releases/tag/0.2.0) - 2022-02-03
 
 <small>[Compare with 0.1.0](https://github.com/mkdocstrings/python-legacy/compare/0.1.0...0.2.0)</small>
@@ -12,7 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Features
 - Add `show_signature` rendering option ([e741b37](https://github.com/mkdocstrings/python-legacy/commit/e741b3709e35e89372021a44f46c9b1939c8147d) by Will Da Silva).
 
-### Build
+### Dependencies
 - Depend on mkdocstrings ([a154c05](https://github.com/mkdocstrings/python-legacy/commit/a154c051aa6230870d2857ca911dcf797e0ec8b6) by Timothée Mazzucotelli).
 
 ### Code Refactoring
