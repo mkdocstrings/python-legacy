@@ -364,6 +364,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../../usage/" class="md-nav__link">
+        Usage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../../changelog/" class="md-nav__link">
         Changelog
       </a>
@@ -1335,7 +1349,7 @@ and overrides the <code>update_env</code> method of the <a href="https://mkdocst
 
 <span class="sd">        Then we pick up the only object within the `objects` list (there&#39;s always only one, because we collect</span>
 <span class="sd">        them one by one), rebuild it&#39;s categories lists</span>
-<span class="sd">        (see [`rebuild_category_lists()`][mkdocstrings.handlers.python.rebuild_category_lists]),</span>
+<span class="sd">        (see [`rebuild_category_lists()`][mkdocstrings.handlers.python.collector.rebuild_category_lists]),</span>
 <span class="sd">        and return it.</span>
 
 <span class="sd">        Arguments:</span>
@@ -1601,7 +1615,7 @@ and raise a CollectionError.</p>
 we log them as warnings.</p>
 <p>Then we pick up the only object within the <code>objects</code> list (there's always only one, because we collect
 them one by one), rebuild it's categories lists
-(see <a href="https://mkdocstrings.github.io/reference/handlers/python/#mkdocstrings.handlers.python.rebuild_category_lists"><code>rebuild_category_lists()</code></a>),
+(see <a href="collector/#mkdocstrings.handlers.python.collector.rebuild_category_lists"><code>rebuild_category_lists()</code></a>),
 and return it.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -1678,7 +1692,7 @@ and return it.</p>
 
 <span class="sd">    Then we pick up the only object within the `objects` list (there&#39;s always only one, because we collect</span>
 <span class="sd">    them one by one), rebuild it&#39;s categories lists</span>
-<span class="sd">    (see [`rebuild_category_lists()`][mkdocstrings.handlers.python.rebuild_category_lists]),</span>
+<span class="sd">    (see [`rebuild_category_lists()`][mkdocstrings.handlers.python.collector.rebuild_category_lists]),</span>
 <span class="sd">    and return it.</span>
 
 <span class="sd">    Arguments:</span>
@@ -1921,7 +1935,7 @@ and overrides the <code>update_env</code> method of the <a href="https://mkdocst
         <td><code>default_config</code></td>
         <td><code>dict</code></td>
         <td><p>The default rendering options,
-see <a href="https://mkdocstrings.github.io/reference/handlers/python/#mkdocstrings.handlers.python.PythonRenderer.default_config"><code>default_config</code></a>.</p></td>
+see <a href="renderer/#mkdocstrings.handlers.python.renderer.PythonRenderer.default_config"><code>default_config</code></a>.</p></td>
       </tr>
   </tbody>
 </table>

@@ -199,13 +199,15 @@
         
   
   
+    
+  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href=".." class="md-tabs__link">
+      <a href=".." class="md-tabs__link md-tabs__link--active">
         Home
       </a>
     </li>
@@ -320,12 +322,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
       
       
       
@@ -351,6 +355,199 @@
       <a href=".." class="md-nav__link">
         Overview
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Usage
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Usage
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#handler-options" class="md-nav__link">
+    Handler options
+  </a>
+  
+    <nav class="md-nav" aria-label="Handler options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selection" class="md-nav__link">
+    Selection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rendering" class="md-nav__link">
+    Rendering
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#collector-pytkdocs" class="md-nav__link">
+    Collector: pytkdocs
+  </a>
+  
+    <nav class="md-nav" aria-label="Collector: pytkdocs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-docstrings-styles" class="md-nav__link">
+    Supported docstrings styles
+  </a>
+  
+    <nav class="md-nav" aria-label="Supported docstrings styles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#google-style" class="md-nav__link">
+    Google-style
+  </a>
+  
+    <nav class="md-nav" aria-label="Google-style">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sections" class="md-nav__link">
+    Sections
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#admonitions" class="md-nav__link">
+    Admonitions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#annotations" class="md-nav__link">
+    Annotations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#numpy-style" class="md-nav__link">
+    Numpy-style
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restructuredtext-style" class="md-nav__link">
+    reStructuredText-style
+  </a>
+  
+    <nav class="md-nav" aria-label="reStructuredText-style">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sections_1" class="md-nav__link">
+    Sections
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#annotations_1" class="md-nav__link">
+    Annotations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#finding-modules" class="md-nav__link">
+    Finding modules
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mocking-libraries" class="md-nav__link">
+    Mocking libraries
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-style-material" class="md-nav__link">
+    Recommended style (Material)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-style-readthedocs" class="md-nav__link">
+    Recommended style (ReadTheDocs)
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -830,6 +1027,11 @@
 
   <h1>Usage</h1>
 
+<div class="admonition tip">
+<p class="admonition-title">This is the documentation for the LEGACY Python handler.</p>
+<p>To read the documentation for the NEW, EXPERIMENTAL handler,
+go to the <a href="https://mkdocstrings.github.io/python">new handler documentation</a>.</p>
+</div>
 <h2 id="handler-options">Handler options<a class="headerlink" href="#handler-options" title="Permanent link">¤</a></h2>
 <p>Like every handler, the Python handler accepts the common
 <a href="#selection"><code>selection</code></a> and <a href="#rendering"><code>rendering</code></a> options,
@@ -1424,6 +1626,41 @@ but you can use the <code>setup_commands</code> to mock them manually:</p>
       </main>
       
         <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Overview
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../changelog/" class="md-footer__link md-footer__link--next" aria-label="Next: Changelog" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Changelog
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
