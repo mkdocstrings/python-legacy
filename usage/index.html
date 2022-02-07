@@ -1131,7 +1131,9 @@ See <a href="#collector-pytkdocs">Collector: pytkdocs</a> to learn more about <c
 </table>
 <div class="admonition example">
 <p class="admonition-title">Configuration example</p>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Global</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Global</label><label for="__tabbed_1_2">Local</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="c1"># mkdocs.yml</span>
 <span class="nt">plugins</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">mkdocstrings</span><span class="p">:</span>
@@ -1143,11 +1145,12 @@ See <a href="#collector-pytkdocs">Collector: pytkdocs</a> to learn more about <c
               <span class="p p-Indicator">-</span> <span class="s">&quot;^__init__$&quot;</span>  <span class="c1"># but always include __init__ modules and methods</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Local</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">::</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">my_package</span>
     <span class="l l-Scalar l-Scalar-Plain">selection</span><span class="p p-Indicator">:</span>
       <span class="nt">filters</span><span class="p">:</span> <span class="p p-Indicator">[]</span>  <span class="c1"># pick up everything</span>
 </code></pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -1263,7 +1266,9 @@ See <a href="#collector-pytkdocs">Collector: pytkdocs</a> to learn more about <c
 <p>These options affect how the documentation is rendered.</p>
 <div class="admonition example">
 <p class="admonition-title">Configuration example</p>
-<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Global</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Global</label><label for="__tabbed_2_2">Local</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="c1"># mkdocs.yml</span>
 <span class="nt">plugins</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">mkdocstrings</span><span class="p">:</span>
@@ -1273,7 +1278,7 @@ See <a href="#collector-pytkdocs">Collector: pytkdocs</a> to learn more about <c
             <span class="nt">show_root_heading</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Local</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="gu">## `ClassA`</span>
 
 ::: my_package.my_module.ClassA
@@ -1281,6 +1286,7 @@ See <a href="#collector-pytkdocs">Collector: pytkdocs</a> to learn more about <c
       show_root_heading: no
       heading_level: 3
 </code></pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -1310,7 +1316,9 @@ Supported sections are:</p>
 <h5 id="admonitions">Admonitions<a class="headerlink" href="#admonitions" title="Permanent link">¤</a></h5>
 <p>Additionally, any section that is not recognized will be transformed into its admonition equivalent.
 For example:</p>
-<div class="tabbed-set" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Original</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Original</label><label for="__tabbed_3_2">Modified</label><label for="__tabbed_3_3">Result</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Note: You can disable this behavior with the `replace_admonitions` option.</span>
 <span class="sd">    To prevent `pytkdocs` from converting sections to admonitions,</span>
@@ -1328,7 +1336,7 @@ For example:</p>
 <span class="sd">&quot;&quot;&quot;</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Modified</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">!!! note &quot;You can disable this behavior with the `replace_admonitions` option.&quot;</span>
 <span class="sd">    To prevent `pytkdocs` from converting sections to admonitions,</span>
@@ -1346,7 +1354,7 @@ For example:</p>
 <span class="sd">&quot;&quot;&quot;</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><label for="__tabbed_3_3">Result</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="admonition note">
 <p class="admonition-title">You can disable this behavior with the <code>replace_admonitions</code> parser option.</p>
 <p>To prevent <code>pytkdocs</code> from converting sections to admonitions,
@@ -1358,6 +1366,7 @@ use the <code>replace_admonitions</code> parser option:</p>
         replace_admonitions: no 
 </code></pre></div>
 <p>So meta!</p>
+</div>
 </div>
 </div>
 </div>
