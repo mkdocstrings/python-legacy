@@ -1,3 +1,7 @@
+!!! tip "This is the documentation for the LEGACY Python handler."
+    To read the documentation for the NEW, EXPERIMENTAL handler,
+    go to the [new handler documentation](https://mkdocstrings.github.io/python).
+
 ## Handler options
 
 Like every handler, the Python handler accepts the common
