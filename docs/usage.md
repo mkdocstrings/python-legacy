@@ -224,6 +224,12 @@ Type annotations are read both in the code and in the docstrings.
     # etc.
     ```
 
+!!! note
+    As Numpy-style is partially supported by the underlying parser,
+    you may experience problems in the building process if your docstring
+    has a `Methods` section in the class docstring
+    (see [#366](https://github.com/mkdocstrings/mkdocstrings/issues/366)).
+
 You can see examples of Numpy-style docstrings
 in [numpydoc's documentation](https://numpydoc.readthedocs.io/en/latest/format.html).
 
