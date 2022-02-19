@@ -18,6 +18,7 @@ def test_init():
     (
         ({"error": "error1", "traceback": "hello"}, "error1\nhello"),
         ({"error": "error1"}, "error1"),
+        ({"error": "", "traceback": "hello"}, "\nhello"),
     ),
 )
 def test_collect_result_error(retval, exp_res):
