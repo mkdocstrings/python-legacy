@@ -22,7 +22,7 @@ def test_init():
     ],
 )
 def test_collect_result_error(retval, exp_res):
-    """Test collector.PythonCollector when result return error.
+    """Test handling of errors when collecting an object.
 
     Args:
         retval: return value to mock json.loads
