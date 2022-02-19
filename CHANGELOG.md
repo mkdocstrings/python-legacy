@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.2.2](https://github.com/mkdocstrings/python-legacy/releases/tag/0.2.2) - 2022-02-19
+
+<small>[Compare with 0.2.1](https://github.com/mkdocstrings/python-legacy/compare/0.2.1...0.2.2)</small>
+
+### Bug Fixes
+- Handle empty error in JSON output ([0e7ab59](https://github.com/mkdocstrings/python-legacy/commit/0e7ab594ae550b4c95a3a8b47ff190dbe88ff000) by rachmadani haryono). [PR #1](https://github.com/mkdocstrings/python-legacy/pull/1)
+
+
 ## [0.2.1](https://github.com/mkdocstrings/python-legacy/releases/tag/0.2.1) - 2022-02-05
 
 <small>[Compare with 0.2.0](https://github.com/mkdocstrings/python-legacy/compare/0.2.0...0.2.1)</small>
