@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import json
+"""test for mkdocstrings.handlers.python.collector."""
 from unittest import mock
 
 import pytest
@@ -10,22 +9,28 @@ from mkdocstrings.handlers.python import collector
 
 
 def test_init():
+    """Test init for collector.PythonCollector."""
     assert collector.PythonCollector()
 
 
 @pytest.mark.parametrize(
-    "retval, exp_res",
-    (
+    ("retval", "exp_res"),
+    [
         ({"error": "error1", "traceback": "hello"}, "error1\nhello"),
         ({"error": "error1"}, "error1"),
         ({"error": "", "traceback": "hello"}, "\nhello"),
-    ),
+    ],
 )
 def test_collect_result_error(retval, exp_res):
-    with mock.patch("mkdocstrings.handlers.python.collector.json.loads") as m_loads, pytest.raises(
-        CollectionError
-    ) as excinfo:
-        m_loads.return_value = retval
-        obj = collector.PythonCollector()
-        assert obj.collect("", {})
-    assert str(excinfo.value) == exp_res
+    """Test collector.PythonCollector when result return error.
+
+    Args:
+        retval: return value to mock json.loads
+        exp_res: expected result
+    """
+    with mock.patch("mkdocstrings.handlers.python.collector.json.loads") as m_loads:
+        with pytest.raises(CollectionError) as excinfo:  # noqa: PT012
+            m_loads.return_value = retval
+            obj = collector.PythonCollector()
+            assert obj.collect("", {})
+            assert str(excinfo.value) == exp_res
