@@ -25,8 +25,8 @@ def test_collect_result_error(retval, exp_res):
     """Test handling of errors when collecting an object.
 
     Args:
-        retval: return value to mock json.loads
-        exp_res: expected result
+        retval: Return value to mock `json.loads` with.
+        exp_res: Expected result.
     """
     with mock.patch("mkdocstrings.handlers.python.collector.json.loads") as m_loads:
         with pytest.raises(CollectionError) as excinfo:  # noqa: PT012
