@@ -152,8 +152,8 @@ class PythonCollector(BaseCollector):
             error = "\n".join(("Error while loading JSON:", stdout, traceback.format_exc()))
             raise CollectionError(error) from exception
 
-        error = result.get("error")
-        if error:
+        if "error" in result:
+            error = result["error"]
             if "traceback" in result:
                 error += f"\n{result['traceback']}"
             raise CollectionError(error)
