@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""test for mkdocstrings.handlers.python.collector."""
+"""Tests for the `collector` module."""
 from unittest import mock
 
 import pytest
