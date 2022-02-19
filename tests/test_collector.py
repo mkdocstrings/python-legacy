@@ -7,7 +7,7 @@ from mkdocstrings.handlers.python import collector
 
 
 def test_init():
-    collector.PythonCollector()
+    assert collector.PythonCollector()
 
 
 def test_collect():
