@@ -70,7 +70,6 @@ plugins:
     nav_file: SUMMARY.md
 - section-index
 - coverage
-- section-index
 - mkdocstrings:
     handlers:
       python:
