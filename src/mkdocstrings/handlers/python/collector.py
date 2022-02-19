@@ -158,15 +158,15 @@ class PythonCollector(BaseCollector):
                 error += f"\n{result['traceback']}"
             raise CollectionError(error)
 
-        for loading_error in result.get("loading_errors", []):
+        for loading_error in result["loading_errors"]:
             log.warning(loading_error)
 
-        for errors in result.get("parsing_errors", {}).values():
+        for errors in result["parsing_errors"].values():
             for parsing_error in errors:
                 log.warning(parsing_error)
 
         # We always collect only one object at a time
-        result = result.get("objects", [{}])[0]
+        result = result["objects"][0]
 
         log.debug("Rebuilding categories and children lists")
         rebuild_category_lists(result)
