@@ -23,7 +23,6 @@ if [ -n "${PYTHON_VERSIONS}" ]; then
             echo "> pdm use -f python${python_version}: Python interpreter not available?" >&2
         fi
     done
-    bash scripts/fixsetup.sh
 else
     pdm install
 fi
