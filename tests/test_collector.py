@@ -5,7 +5,7 @@ from unittest import mock
 import pytest
 
 from mkdocstrings.handlers.base import CollectionError
-from mkdocstrings.handlers.python import collector
+from mkdocstrings_handlers.python import collector
 
 
 def test_init():
@@ -28,7 +28,7 @@ def test_collect_result_error(retval, exp_res):
         retval: Return value to mock `json.loads` with.
         exp_res: Expected result.
     """
-    with mock.patch("mkdocstrings.handlers.python.collector.json.loads") as m_loads:
+    with mock.patch("mkdocstrings_handlers.python.collector.json.loads") as m_loads:
         with pytest.raises(CollectionError) as excinfo:  # noqa: PT012
             m_loads.return_value = retval
             obj = collector.PythonCollector()

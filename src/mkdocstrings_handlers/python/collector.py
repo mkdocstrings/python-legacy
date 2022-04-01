@@ -120,7 +120,7 @@ class PythonCollector(BaseCollector):
 
         Then we pick up the only object within the `objects` list (there's always only one, because we collect
         them one by one), rebuild it's categories lists
-        (see [`rebuild_category_lists()`][mkdocstrings.handlers.python.collector.rebuild_category_lists]),
+        (see [`rebuild_category_lists()`][mkdocstrings_handlers.python.collector.rebuild_category_lists]),
         and return it.
 
         Arguments:

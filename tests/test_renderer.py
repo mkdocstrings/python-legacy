@@ -2,8 +2,8 @@
 
 from copy import deepcopy
 
-from mkdocstrings.handlers.python.collector import rebuild_category_lists
-from mkdocstrings.handlers.python.renderer import _sort_key_alphabetical, _sort_key_source, sort_object  # noqa: WPS450
+from mkdocstrings_handlers.python.collector import rebuild_category_lists
+from mkdocstrings_handlers.python.renderer import _sort_key_alphabetical, _sort_key_source, sort_object  # noqa: WPS450
 
 
 def test_members_order():

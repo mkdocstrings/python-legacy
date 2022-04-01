@@ -4,10 +4,10 @@ import posixpath
 from typing import Any, BinaryIO, Iterator, List, Optional, Tuple
 
 from mkdocstrings.handlers.base import BaseHandler
-from mkdocstrings.handlers.python.collector import PythonCollector
-from mkdocstrings.handlers.python.renderer import PythonRenderer
 from mkdocstrings.inventory import Inventory
 from mkdocstrings.loggers import get_logger
+from mkdocstrings_handlers.python.collector import PythonCollector
+from mkdocstrings_handlers.python.renderer import PythonRenderer
 
 # TODO: add a deprecation warning once the new handler handles 95% of use-cases
 

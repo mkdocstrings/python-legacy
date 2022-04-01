@@ -46,7 +46,8 @@ Funding = "https://github.com/sponsors/pawamoy"
 
 [tool.pdm]
 version = {use_scm = true}
-includes = ["src/mkdocstrings"]
+includes = ["src/mkdocstrings_handlers"]
+editable-backend = "editables"
 
 [tool.pdm.dev-dependencies]
 duty = ["duty>=0.7"]
