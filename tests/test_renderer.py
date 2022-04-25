@@ -2,8 +2,12 @@
 
 from copy import deepcopy
 
-from mkdocstrings_handlers.python.collector import rebuild_category_lists
-from mkdocstrings_handlers.python.renderer import _sort_key_alphabetical, _sort_key_source, sort_object  # noqa: WPS450
+from mkdocstrings_handlers.python.rendering import (  # noqa: WPS450
+    rebuild_category_lists,
+    sort_key_alphabetical,
+    sort_key_source,
+    sort_object,
+)
 
 
 def test_members_order():
@@ -35,7 +39,7 @@ def test_members_order():
     }
     rebuild_category_lists(collected)
     alphebetical = deepcopy(collected)
-    sort_object(alphebetical, _sort_key_alphabetical)
+    sort_object(alphebetical, sort_key_alphabetical)
 
     rebuilt_categories = {"children": [], **subcategories}
     assert (
@@ -59,7 +63,7 @@ def test_members_order():
     )
 
     source = deepcopy(collected)
-    sort_object(source, _sort_key_source)
+    sort_object(source, sort_key_source)
 
     assert (
         source["children"]

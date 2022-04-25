@@ -5,12 +5,7 @@ from unittest import mock
 import pytest
 
 from mkdocstrings.handlers.base import CollectionError
-from mkdocstrings_handlers.python import collector
-
-
-def test_init():
-    """Test init for collector.PythonCollector."""
-    assert collector.PythonCollector()
+from mkdocstrings_handlers.python import get_handler
 
 
 @pytest.mark.parametrize(
@@ -28,9 +23,9 @@ def test_collect_result_error(retval, exp_res):
         retval: Return value to mock `json.loads` with.
         exp_res: Expected result.
     """
-    with mock.patch("mkdocstrings_handlers.python.collector.json.loads") as m_loads:
+    with mock.patch("mkdocstrings_handlers.python.handler.json.loads") as m_loads:
         with pytest.raises(CollectionError) as excinfo:  # noqa: PT012
             m_loads.return_value = retval
-            obj = collector.PythonCollector()
-            assert obj.collect("", {})
+            handler = get_handler("material")
+            assert handler.collect("", {})
             assert str(excinfo.value) == exp_res

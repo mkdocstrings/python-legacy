@@ -73,7 +73,7 @@ Option | Type | Description | Default
     
 ### Rendering
 
-::: mkdocstrings_handlers.python.renderer:PythonRenderer.default_config
+::: mkdocstrings_handlers.python.handler:PythonHandler.default_rendering_config
     rendering:
       show_root_toc_entry: false
 
