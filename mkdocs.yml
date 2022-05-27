@@ -4,6 +4,7 @@ site_url: "https://mkdocstrings.github.io/python-legacy"
 repo_url: "https://github.com/mkdocstrings/python-legacy"
 repo_name: "mkdocstrings/python-legacy"
 site_dir: "site"
+watch: [README.md, CONTRIBUTING.md, CHANGELOG.md, src]
 
 nav:
 - Home:
@@ -26,6 +27,7 @@ theme:
     logo: material/currency-sign
   features:
   - navigation.tabs
+  - navigation.tabs.sticky
   - navigation.top
   palette:
   - media: "(prefers-color-scheme: light)"
@@ -49,6 +51,7 @@ extra_css:
 
 markdown_extensions:
 - admonition
+- callouts
 - pymdownx.emoji
 - pymdownx.magiclink
 - pymdownx.snippets:
@@ -62,22 +65,20 @@ markdown_extensions:
 
 plugins:
 - search
+- markdown-exec
 - gen-files:
     scripts:
-    - docs/gen_credits.py
     - docs/gen_ref_nav.py
 - literate-nav:
     nav_file: SUMMARY.md
-- section-index
 - coverage
+- section-index
 - mkdocstrings:
     handlers:
       python:
         paths: [src, docs]
         import:
         - https://mkdocstrings.github.io/objects.inv
-    watch:
-    - src/mkdocstrings_handlers
 
 extra:
   social:
