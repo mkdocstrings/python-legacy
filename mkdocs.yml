@@ -73,13 +73,11 @@ plugins:
 - mkdocstrings:
     handlers:
       python:
+        paths: [src, docs]
         import:
         - https://mkdocstrings.github.io/objects.inv
-        setup_commands:
-        - import sys
-        - sys.path.append("docs")
     watch:
-    - src/mkdocstrings
+    - src/mkdocstrings_handlers
 
 extra:
   social:
