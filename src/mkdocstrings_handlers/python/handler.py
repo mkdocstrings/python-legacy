@@ -61,30 +61,8 @@ class PythonHandler(BaseHandler):
     which we know will not generate any warnings.
     """
 
-    default_collection_config: dict = {"filters": ["!^_[^_]"]}
-    """The default selection options.
-
-    Option | Type | Description | Default
-    ------ | ---- | ----------- | -------
-    **`filters`** | `List[str]` | Filter members with regular expressions. | `[ "!^_[^_]" ]`
-    **`members`** | `Union[bool, List[str]]` | Explicitly select the object members. | *`pytkdocs` default: `True`*
-
-    If `members` is a list of names, filters are applied only on the members children (not the members themselves).
-    If `members` is `False`, none are selected.
-    If `members` is `True` or an empty list, filters are applied on all members and their children.
-
-    Members affect only the first layer of objects, while filters affect the whole object-tree recursively.
-
-    Every filters is run against every object name. An object can be un-selected by a filter and re-selected by the
-    next one:
-
-    - `"!^_"`: exclude all objects starting with an underscore
-    - `"^__"`: but select all objects starting with **two** underscores
-
-    Obviously one could use a single filter instead: `"!^_[^_]"`, which is the default.
-    """
-
-    default_rendering_config: dict = {
+    default_config: dict = {
+        "filters": ["!^_[^_]"],
         "show_root_heading": False,
         "show_root_toc_entry": True,
         "show_root_full_path": True,
@@ -100,24 +78,44 @@ class PythonHandler(BaseHandler):
         "heading_level": 2,
         "members_order": "alphabetical",
     }
-    """The default rendering options.
+    """
+    **Headings options:**
 
-    Option | Type | Description | Default
-    ------ | ---- | ----------- | -------
-    **`show_root_heading`** | `bool` | Show the heading of the object at the root of the documentation tree. | `False`
-    **`show_root_toc_entry`** | `bool` | If the root heading is not shown, at least add a ToC entry for it. | `True`
-    **`show_root_full_path`** | `bool` | Show the full Python path for the root object heading. | `True`
-    **`show_object_full_path`** | `bool` | Show the full Python path of every object. | `False`
-    **`show_root_members_full_path`** | `bool` | Show the full Python path of objects that are children of the root object (for example, classes in a module). When False, `show_object_full_path` overrides. | `False`
-    **`show_category_heading`** | `bool` | When grouped by categories, show a heading for each category. | `False`
-    **`show_if_no_docstring`** | `bool` | Show the object heading even if it has no docstring or children with docstrings. | `False`
-    **`show_signature`** | `bool` | Show method and function signatures. | `True`
-    **`show_signature_annotations`** | `bool` | Show the type annotations in method and function signatures. | `False`
-    **`show_source`** | `bool` | Show the source code of this object. | `True`
-    **`show_bases`** | `bool` | Show the base classes of a class. | `True`
-    **`group_by_category`** | `bool` | Group the object's children by categories: attributes, classes, functions, methods, and modules. | `True`
-    **`heading_level`** | `int` | The initial heading level to use. | `2`
-    **`members_order`** | `str` | The members ordering to use. Options: `alphabetical` - order by the members names, `source` - order members as they appear in the source file. | `alphabetical`
+    - `heading_level` (`int`): The initial heading level to use. Default: `2`.
+    - `show_root_heading` (`bool`): Show the heading of the object at the root of the documentation tree
+        (i.e. the object referenced by the identifier after `:::`). Default: `False`.
+    - `show_root_toc_entry` (`bool`): If the root heading is not shown, at least add a ToC entry for it. Default: `True`.
+    - `show_root_full_path` (`bool`): Show the full Python path for the root object heading. Default: `True`.
+    - `show_root_members_full_path` (`bool`): Show the full Python path of the root members. Default: `False`.
+    - `show_object_full_path` (`bool`): Show the full Python path of every object. Default: `False`.
+    - `show_category_heading` (`bool`): When grouped by categories, show a heading for each category. Default: `False`.
+
+    **Members options:**
+
+    - `members` (`list[str] | False | None`): An explicit list of members to render. Default: `None`.
+    - `members_order` (`str`): The members ordering to use. Options: `alphabetical` - order by the members names,
+        `source` - order members as they appear in the source file. Default: `"alphabetical"`.
+    - `filters` (`list[str] | None`): A list of filters applied to filter objects based on their name.
+        A filter starting with `!` will exclude matching objects instead of including them.
+        The `members` option takes precedence over `filters` (filters will still be applied recursively
+        to lower members in the hierarchy). Default: `["!^_[^_]"]`.
+    - `group_by_category` (`bool`): Group the object's children by categories: attributes, classes, functions, and modules. Default: `True`.
+
+    **Docstrings options:**
+
+    - `docstring_style` (`str`): The docstring style to use: `google`, `numpy`, `sphinx`, or `None`. Default: `"google"`.
+    - `docstring_options` (`dict`): The options for the docstring parser. See parsers under [`pytkdocs.parsers.docstrings`][].
+    - `show_if_no_docstring` (`bool`): Show the object heading even if it has no docstring or children with docstrings. Default: `False`.
+
+    **Signatures/annotations options:**
+
+    - `show_signature` (`bool`): Show methods and functions signatures. Default: `True`.
+    - `show_signature_annotations` (`bool`): Show the type annotations in methods and functions signatures. Default: `False`.
+
+    **Additional options:**
+
+    - `show_bases` (`bool`): Show the base classes of a class. Default: `True`.
+    - `show_source` (`bool`): Show the source code of this object. Default: `True`.
     """  # noqa: E501
 
     def __init__(  # noqa: WPS231
@@ -139,7 +137,7 @@ class PythonHandler(BaseHandler):
             *args: Handler name, theme and custom templates.
             setup_commands: A list of python commands as strings to be executed in the subprocess before `pytkdocs`.
             config_file_path: The MkDocs configuration file path.
-            paths: A list of paths to use as Griffe search paths.
+            paths: A list of paths to use as search paths.
             **kwargs: Same thing, but with keyword arguments.
         """
         logger.debug("Opening 'pytkdocs' subprocess")
@@ -251,10 +249,12 @@ class PythonHandler(BaseHandler):
         Returns:
             The collected object-tree.
         """
-        final_config = dict(self.default_collection_config)
+        final_config = {}
         for option in ("filters", "members"):
             if option in config:
                 final_config[option] = config[option]
+            elif option in self.default_config:
+                final_config[option] = self.default_config[option]
 
         logger.debug("Preparing input")
         json_input = json.dumps({"objects": [{"path": identifier, **final_config}]})
@@ -300,7 +300,7 @@ class PythonHandler(BaseHandler):
         self.process.terminate()
 
     def render(self, data: CollectorItem, config: dict) -> str:  # noqa: D102 (ignore missing docstring)
-        final_config = ChainMap(config, self.default_rendering_config)
+        final_config = ChainMap(config, self.default_config)
 
         template = self.env.get_template(f"{data['category']}.html")
 
@@ -352,7 +352,7 @@ def get_handler(
         custom_templates: Directory containing custom templates.
         setup_commands: A list of commands as strings to be executed in the subprocess before `pytkdocs`.
         config_file_path: The MkDocs configuration file path.
-        paths: A list of paths to use as Griffe search paths.
+        paths: A list of paths to use as search paths.
         config: Configuration passed to the handler.
 
     Returns:
