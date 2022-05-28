@@ -79,6 +79,7 @@ plugins:
         paths: [src, docs]
         import:
         - https://mkdocstrings.github.io/objects.inv
+        - https://mkdocstrings.github.io/pytkdocs/objects.inv
 
 extra:
   social:
