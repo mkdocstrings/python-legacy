@@ -5,6 +5,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.2.3](https://github.com/mkdocstrings/python-legacy/releases/tag/0.2.3) - 2022-05-28
+
+<small>[Compare with 0.2.2](https://github.com/mkdocstrings/python-legacy/compare/0.2.2...0.2.3)</small>
+
+### Packaging / Dependencies
+- Depend on mkdocstrings 0.19 ([71123dc](https://github.com/mkdocstrings/python-legacy/commit/71123dc4dda6ece390d94d0400920541ded76ede) by Timothée Mazzucotelli).
+
+### Code Refactoring
+- Unify default configurations ([47c53fc](https://github.com/mkdocstrings/python-legacy/commit/47c53fcc1c6519025f0aec65b85bdc99e4eac2f5) by Timothée Mazzucotelli).
+- Stop using deprecated base classes ([5a28b12](https://github.com/mkdocstrings/python-legacy/commit/5a28b125a2ac87ddf1b804160deb11076a0ae409) by Timothée Mazzucotelli).
+- Use new `mkdocstrings_handlers` namespace ([d688c87](https://github.com/mkdocstrings/python-legacy/commit/d688c87dd3eca4d8cc25761d957e6855832da4b4) by Timothée Mazzucotelli).
+
+
 ## [0.2.2](https://github.com/mkdocstrings/python-legacy/releases/tag/0.2.2) - 2022-02-19
 
 <small>[Compare with 0.2.1](https://github.com/mkdocstrings/python-legacy/compare/0.2.1...0.2.2)</small>
