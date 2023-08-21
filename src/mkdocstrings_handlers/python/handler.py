@@ -323,7 +323,7 @@ class PythonHandler(BaseHandler):
             **{"config": final_config, data["category"]: data, "heading_level": heading_level, "root": True},
         )
 
-    def get_anchors(self, data: CollectorItem) -> Sequence[str]:  # noqa: D102 (ignore missing docstring)
+    def get_anchors(self, data: CollectorItem) -> tuple[str, ...]:  # noqa: D102 (ignore missing docstring)
         try:
             return (data["path"],)
         except KeyError:
