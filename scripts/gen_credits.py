@@ -14,7 +14,6 @@ from typing import Mapping, cast
 from jinja2 import StrictUndefined
 from jinja2.sandbox import SandboxedEnvironment
 
-
 # TODO: Remove once support for Python 3.10 is dropped.
 if sys.version_info >= (3, 11):
     import tomllib

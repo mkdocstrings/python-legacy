@@ -2,7 +2,7 @@
 
 from copy import deepcopy
 
-from mkdocstrings_handlers.python.rendering import (  # noqa: WPS450
+from mkdocstrings_handlers.python.rendering import (
     rebuild_category_lists,
     sort_key_alphabetical,
     sort_key_source,

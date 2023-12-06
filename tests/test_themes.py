@@ -1,6 +1,5 @@
 """Tests for the different themes we claim to support."""
 
-import sys
 
 import pytest
 
@@ -34,6 +33,6 @@ def test_render_themes_templates(module, plugin):
         plugin: The plugin instance (parametrized fixture).
     """
     handler = plugin.handlers.get_handler("python")
-    handler._update_env(plugin.md, plugin.handlers._config)  # noqa: WPS437
+    handler._update_env(plugin.md, plugin.handlers._config)
     data = handler.collect(module, {})
     handler.render(data, {})

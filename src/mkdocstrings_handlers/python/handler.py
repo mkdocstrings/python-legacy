@@ -11,15 +11,9 @@ import posixpath
 import sys
 import traceback
 from collections import ChainMap
-from subprocess import PIPE, Popen  # noqa: S404
-from typing import Any, BinaryIO, Iterator, List, Optional, Sequence, Tuple
+from subprocess import PIPE, Popen
+from typing import TYPE_CHECKING, Any, BinaryIO, Iterator
 
-from markdown import Markdown
-
-from mkdocstrings.extension import PluginError
-from mkdocstrings.handlers.base import BaseHandler, CollectionError, CollectorItem
-from mkdocstrings.inventory import Inventory
-from mkdocstrings.loggers import get_logger
 from mkdocstrings_handlers.python.rendering import (
     do_brief_xref,
     rebuild_category_lists,
@@ -27,6 +21,14 @@ from mkdocstrings_handlers.python.rendering import (
     sort_key_source,
     sort_object,
 )
+
+from mkdocstrings.extension import PluginError
+from mkdocstrings.handlers.base import BaseHandler, CollectionError, CollectorItem
+from mkdocstrings.inventory import Inventory
+from mkdocstrings.loggers import get_logger
+
+if TYPE_CHECKING:
+    from markdown import Markdown
 
 # TODO: add a deprecation warning once the new handler handles 95% of use-cases
 
@@ -116,12 +118,12 @@ class PythonHandler(BaseHandler):
 
     - `show_bases` (`bool`): Show the base classes of a class. Default: `True`.
     - `show_source` (`bool`): Show the source code of this object. Default: `True`.
-    """  # noqa: E501
+    """
 
-    def __init__(  # noqa: WPS231
+    def __init__(
         self,
         *args,
-        setup_commands: Optional[List[str]] = None,
+        setup_commands: list[str] | None = None,
         config_file_path: str | None = None,
         paths: list[str] | None = None,
         **kwargs,
@@ -150,9 +152,8 @@ class PythonHandler(BaseHandler):
             paths.append(os.path.dirname(config_file_path))
         search_paths = []
         for path in paths:
-            if not os.path.isabs(path):
-                if config_file_path:
-                    path = os.path.abspath(os.path.join(os.path.dirname(config_file_path), path))
+            if not os.path.isabs(path) and config_file_path:
+                path = os.path.abspath(os.path.join(os.path.dirname(config_file_path), path))
             if path not in search_paths:
                 search_paths.append(path)
         self._paths = search_paths
@@ -160,7 +161,7 @@ class PythonHandler(BaseHandler):
         commands = []
 
         if search_paths:
-            commands.extend([f"sys.path.insert(0, {path!r})" for path in reversed(search_paths)])  # noqa: WPS441
+            commands.extend([f"sys.path.insert(0, {path!r})" for path in reversed(search_paths)])
 
         if setup_commands:
             # prevent the Python interpreter or the setup commands
@@ -172,7 +173,7 @@ class PythonHandler(BaseHandler):
                     *setup_commands,
                     "sys.stdout.flush()",
                     "sys.stdout = sys.__stdout__",  # restore stdout
-                ]
+                ],
             )
 
         if commands:
@@ -186,7 +187,7 @@ class PythonHandler(BaseHandler):
         else:
             cmd = [sys.executable, "-m", "pytkdocs", "--line-by-line"]
 
-        self.process = Popen(  # noqa: S603,S607 (we trust the input, and we don't want to use the absolute path)
+        self.process = Popen(
             cmd,
             universal_newlines=True,
             stdout=PIPE,
@@ -198,8 +199,12 @@ class PythonHandler(BaseHandler):
 
     @classmethod
     def load_inventory(
-        cls, in_file: BinaryIO, url: str, base_url: Optional[str] = None, **kwargs
-    ) -> Iterator[Tuple[str, str]]:
+        cls,
+        in_file: BinaryIO,
+        url: str,
+        base_url: str | None = None,
+        **kwargs,
+    ) -> Iterator[tuple[str, str]]:
         """Yield items and their URLs from an inventory file streamed from `in_file`.
 
         This implements mkdocstrings' `load_inventory` "protocol" (see plugin.py).
@@ -216,10 +221,10 @@ class PythonHandler(BaseHandler):
         if base_url is None:
             base_url = posixpath.dirname(url)
 
-        for item in Inventory.parse_sphinx(in_file, domain_filter=("py",)).values():  # noqa: WPS526
+        for item in Inventory.parse_sphinx(in_file, domain_filter=("py",)).values():
             yield item.name, posixpath.join(base_url, item.uri)
 
-    def collect(self, identifier: str, config: dict) -> CollectorItem:  # noqa: WPS231
+    def collect(self, identifier: str, config: dict) -> CollectorItem:
         """Collect the documentation tree given an identifier and selection options.
 
         In this method, we feed one line of JSON to the standard input of the subprocess that was opened
@@ -338,9 +343,9 @@ class PythonHandler(BaseHandler):
 
 
 def get_handler(
-    theme: str,  # noqa: W0613 (unused argument config)
-    custom_templates: Optional[str] = None,
-    setup_commands: Optional[List[str]] = None,
+    theme: str,
+    custom_templates: str | None = None,
+    setup_commands: list[str] | None = None,
     config_file_path: str | None = None,
     paths: list[str] | None = None,
     **config: Any,

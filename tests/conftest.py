@@ -19,8 +19,8 @@ def fixture_mkdocs_conf(request, tmp_path):
         MkDocs configuration object.
     """
     conf = MkDocsConfig()
-    while hasattr(request, "_parent_request") and hasattr(request._parent_request, "_parent_request"):  # noqa: WPS437
-        request = request._parent_request  # noqa: WPS437
+    while hasattr(request, "_parent_request") and hasattr(request._parent_request, "_parent_request"):
+        request = request._parent_request
 
     conf_dict = {
         "site_name": "foo",

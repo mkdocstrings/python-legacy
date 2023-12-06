@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 import sys
-from typing import Any, Callable
+from typing import TYPE_CHECKING, Any, Callable
 
 from markupsafe import Markup
 
-from mkdocstrings.handlers.base import CollectorItem
 from mkdocstrings.loggers import get_logger
+
+if TYPE_CHECKING:
+    from mkdocstrings.handlers.base import CollectorItem
 
 log = get_logger(__name__)
 
