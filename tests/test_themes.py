@@ -20,14 +20,12 @@ import pytest
         "mkdocstrings.extension",
         "mkdocstrings.inventory",
         "mkdocstrings.loggers",
-        "mkdocstrings.plugin",
         "mkdocstrings.handlers.base",
         "mkdocstrings.handlers.rendering",
         "mkdocstrings_handlers.python.handler",
         "mkdocstrings_handlers.python.rendering",
     ],
 )
-@pytest.mark.skipif(sys.version_info < (3, 7), reason="material is not installed on Python 3.6")
 def test_render_themes_templates(module, plugin):
     """Test rendering of a given theme's templates.
 

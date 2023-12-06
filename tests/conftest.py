@@ -4,15 +4,7 @@ from collections import ChainMap
 
 import pytest
 from markdown.core import Markdown
-from mkdocs import config
-
-try:
-    from mkdocs.config.defaults import get_schema
-except ImportError:
-
-    def get_schema():  # noqa: WPS440
-        """Fallback for old versions of MkDocs."""  # noqa: DAR201
-        return config.DEFAULT_SCHEMA
+from mkdocs.config.defaults import MkDocsConfig
 
 
 @pytest.fixture(name="mkdocs_conf")
@@ -26,7 +18,7 @@ def fixture_mkdocs_conf(request, tmp_path):
     Yields:
         MkDocs configuration object.
     """
-    conf = config.Config(schema=get_schema())
+    conf = MkDocsConfig()
     while hasattr(request, "_parent_request") and hasattr(request._parent_request, "_parent_request"):  # noqa: WPS437
         request = request._parent_request  # noqa: WPS437
 
