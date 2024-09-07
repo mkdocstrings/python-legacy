@@ -2,62 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://mkdocstrings.github.io/python-legacy/</loc>
-         <lastmod>2022-05-28</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-07</lastmod>
     </url>
     <url>
          <loc>https://mkdocstrings.github.io/python-legacy/changelog/</loc>
-         <lastmod>2022-05-28</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-07</lastmod>
     </url>
     <url>
          <loc>https://mkdocstrings.github.io/python-legacy/code_of_conduct/</loc>
-         <lastmod>2022-05-28</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-07</lastmod>
     </url>
     <url>
          <loc>https://mkdocstrings.github.io/python-legacy/contributing/</loc>
-         <lastmod>2022-05-28</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-07</lastmod>
     </url>
     <url>
          <loc>https://mkdocstrings.github.io/python-legacy/credits/</loc>
-         <lastmod>2022-05-28</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-07</lastmod>
     </url>
     <url>
          <loc>https://mkdocstrings.github.io/python-legacy/license/</loc>
-         <lastmod>2022-05-28</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-07</lastmod>
+    </url>
+    <url>
+         <loc>https://mkdocstrings.github.io/python-legacy/reference/</loc>
+         <lastmod>2024-09-07</lastmod>
     </url>
     <url>
          <loc>https://mkdocstrings.github.io/python-legacy/usage/</loc>
-         <lastmod>2022-05-28</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>None</loc>
-         <lastmod>2022-05-28</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://mkdocstrings.github.io/python-legacy/reference/mkdocstrings_handlers/python/</loc>
-         <lastmod>2022-05-28</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://mkdocstrings.github.io/python-legacy/reference/mkdocstrings_handlers/python/handler/</loc>
-         <lastmod>2022-05-28</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://mkdocstrings.github.io/python-legacy/reference/mkdocstrings_handlers/python/rendering/</loc>
-         <lastmod>2022-05-28</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-07</lastmod>
     </url>
     <url>
          <loc>https://mkdocstrings.github.io/python-legacy/coverage/</loc>
-         <lastmod>2022-05-28</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-09-07</lastmod>
     </url>
 </urlset>
