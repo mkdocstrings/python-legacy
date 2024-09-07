@@ -20,7 +20,7 @@ def do_brief_xref(path: str) -> Markup:
         A span containing the brief cross-reference and the full one on hover.
     """
     brief = path.split(".")[-1]
-    return Markup("<span data-autorefs-optional-hover={path}>{brief}</span>").format(path=path, brief=brief)
+    return Markup("<autoref identifier={path} optional hover>{brief}</autoref>").format(path=path, brief=brief)
 
 
 def sort_object(obj: CollectorItem, sort_function: Callable[[CollectorItem], Any]) -> None:
