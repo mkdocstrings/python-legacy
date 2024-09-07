@@ -30,7 +30,7 @@ classifiers = [
 ]
 dependencies = [
     "mkdocstrings>=0.19",
-    "mkdocs-autorefs>=1.0",
+    "mkdocs-autorefs>=1.1",
     "pytkdocs>=0.14",
 ]
 
