@@ -29,7 +29,7 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "mkdocstrings>=0.19",
+    "mkdocstrings>=0.26",
     "pytkdocs>=0.14",
 ]
 
