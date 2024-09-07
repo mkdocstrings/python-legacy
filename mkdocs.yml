@@ -4,7 +4,7 @@ site_url: "https://mkdocstrings.github.io/python-legacy"
 repo_url: "https://github.com/mkdocstrings/python-legacy"
 repo_name: "mkdocstrings/python-legacy"
 site_dir: "site"
-watch: [mkdocs.yml, README.md, CONTRIBUTING.md, CHANGELOG.md, src/mkdocstrings]
+watch: [mkdocs.yml, README.md, CONTRIBUTING.md, CHANGELOG.md, src/mkdocstrings_handlers]
 copyright: Copyright &copy; 2021 Timothée Mazzucotelli
 edit_uri: edit/main/docs/
 

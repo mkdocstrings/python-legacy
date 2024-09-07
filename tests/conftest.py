@@ -1,14 +1,23 @@
 """Configuration for the pytest test suite."""
 
+from __future__ import annotations
+
 from collections import ChainMap
+from typing import TYPE_CHECKING, Iterator
 
 import pytest
 from markdown.core import Markdown
 from mkdocs.config.defaults import MkDocsConfig
 
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from mkdocstrings.extension import MkdocstringsExtension
+    from mkdocstrings.plugin import MkdocstringsPlugin
+
 
 @pytest.fixture(name="mkdocs_conf")
-def fixture_mkdocs_conf(request, tmp_path):
+def fixture_mkdocs_conf(request: pytest.FixtureRequest, tmp_path: Path) -> Iterator[MkDocsConfig]:
     """Yield a MkDocs configuration object.
 
     Parameters:
@@ -45,7 +54,7 @@ def fixture_mkdocs_conf(request, tmp_path):
 
 
 @pytest.fixture(name="plugin")
-def fixture_plugin(mkdocs_conf):
+def fixture_plugin(mkdocs_conf: MkDocsConfig) -> MkdocstringsPlugin:
     """Return a plugin instance.
 
     Parameters:
@@ -60,7 +69,7 @@ def fixture_plugin(mkdocs_conf):
 
 
 @pytest.fixture(name="ext_markdown")
-def fixture_ext_markdown(plugin):
+def fixture_ext_markdown(plugin: MkdocstringsPlugin) -> MkdocstringsExtension:
     """Return a Markdown instance with MkdocstringsExtension.
 
     Parameters:
@@ -69,4 +78,4 @@ def fixture_ext_markdown(plugin):
     Returns:
         The plugin Markdown instance.
     """
-    return plugin.md
+    return plugin.md  # type: ignore[attr-defined]

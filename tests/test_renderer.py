@@ -1,5 +1,7 @@
 """Tests for the handlers.python module."""
 
+from __future__ import annotations
+
 from copy import deepcopy
 
 from mkdocstrings_handlers.python.rendering import (
@@ -10,9 +12,9 @@ from mkdocstrings_handlers.python.rendering import (
 )
 
 
-def test_members_order():
+def test_members_order() -> None:
     """Assert that members sorting functions work correctly."""
-    subcategories = {key: [] for key in ("attributes", "classes", "functions", "methods", "modules")}
+    subcategories: dict[str, list] = {key: [] for key in ("attributes", "classes", "functions", "methods", "modules")}
     categories = {"children": {}, **subcategories}
     collected = {
         "name": "root",

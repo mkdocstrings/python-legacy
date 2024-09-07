@@ -15,14 +15,14 @@ from mkdocstrings.handlers.base import CollectionError
         ({"error": "", "traceback": "hello"}, "\nhello"),
     ],
 )
-def test_collect_result_error(retval, exp_res):
+def test_collect_result_error(retval: dict, exp_res: str) -> None:
     """Test handling of errors when collecting an object.
 
     Args:
         retval: Return value to mock `json.loads` with.
         exp_res: Expected result.
     """
-    with mock.patch("mkdocstrings_handlers.python.handler.json.loads") as m_loads:
+    with mock.patch("mkdocstrings_handlers.python.handler.json.loads") as m_loads:  # noqa: SIM117
         with pytest.raises(CollectionError) as excinfo:  # noqa: PT012
             m_loads.return_value = retval
             handler = get_handler("material")

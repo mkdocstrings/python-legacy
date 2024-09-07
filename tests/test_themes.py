@@ -1,7 +1,13 @@
 """Tests for the different themes we claim to support."""
 
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 import pytest
+
+if TYPE_CHECKING:
+    from mkdocstrings.plugin import MkdocstringsPlugin
 
 
 @pytest.mark.parametrize(
@@ -25,7 +31,7 @@ import pytest
         "mkdocstrings_handlers.python.rendering",
     ],
 )
-def test_render_themes_templates(module, plugin):
+def test_render_themes_templates(module: str, plugin: MkdocstringsPlugin) -> None:
     """Test rendering of a given theme's templates.
 
     Parameters:
@@ -33,6 +39,6 @@ def test_render_themes_templates(module, plugin):
         plugin: The plugin instance (parametrized fixture).
     """
     handler = plugin.handlers.get_handler("python")
-    handler._update_env(plugin.md, plugin.handlers._config)
+    handler._update_env(plugin.md, plugin.handlers._config)  # type: ignore[attr-defined]
     data = handler.collect(module, {})
     handler.render(data, {})

@@ -12,7 +12,7 @@ import sys
 import traceback
 from collections import ChainMap
 from subprocess import PIPE, Popen
-from typing import TYPE_CHECKING, Any, BinaryIO, Iterator
+from typing import TYPE_CHECKING, Any, BinaryIO, ClassVar, Iterator, Mapping, MutableMapping
 
 from mkdocstrings_handlers.python.rendering import (
     do_brief_xref,
@@ -48,7 +48,7 @@ class PythonHandler(BaseHandler):
     enable_inventory: bool = True
 
     fallback_theme = "material"
-    fallback_config = {"docstring_style": "markdown", "filters": ["!.*"]}
+    fallback_config: ClassVar[dict] = {"docstring_style": "markdown", "filters": ["!.*"]}
     """The configuration used when falling back to re-collecting an object to get its anchor.
 
     This configuration is used in [`Handlers.get_anchors`][mkdocstrings.handlers.base.Handlers.get_anchors].
@@ -63,7 +63,7 @@ class PythonHandler(BaseHandler):
     which we know will not generate any warnings.
     """
 
-    default_config: dict = {
+    default_config: ClassVar[dict] = {
         "filters": ["!^_[^_]"],
         "show_root_heading": False,
         "show_root_toc_entry": True,
@@ -122,11 +122,11 @@ class PythonHandler(BaseHandler):
 
     def __init__(
         self,
-        *args,
+        *args: Any,
         setup_commands: list[str] | None = None,
         config_file_path: str | None = None,
         paths: list[str] | None = None,
-        **kwargs,
+        **kwargs: Any,
     ) -> None:
         """Initialize the handler.
 
@@ -153,7 +153,7 @@ class PythonHandler(BaseHandler):
         search_paths = []
         for path in paths:
             if not os.path.isabs(path) and config_file_path:
-                path = os.path.abspath(os.path.join(os.path.dirname(config_file_path), path))
+                path = os.path.abspath(os.path.join(os.path.dirname(config_file_path), path))  # noqa: PLW2901
             if path not in search_paths:
                 search_paths.append(path)
         self._paths = search_paths
@@ -188,7 +188,7 @@ class PythonHandler(BaseHandler):
             cmd = [sys.executable, "-m", "pytkdocs", "--line-by-line"]
 
         self.process = Popen(
-            cmd,
+            cmd,  # noqa: S603
             universal_newlines=True,
             stdout=PIPE,
             stdin=PIPE,
@@ -203,7 +203,7 @@ class PythonHandler(BaseHandler):
         in_file: BinaryIO,
         url: str,
         base_url: str | None = None,
-        **kwargs,
+        **kwargs: Any,  # noqa: ARG003
     ) -> Iterator[tuple[str, str]]:
         """Yield items and their URLs from an inventory file streamed from `in_file`.
 
@@ -224,7 +224,7 @@ class PythonHandler(BaseHandler):
         for item in Inventory.parse_sphinx(in_file, domain_filter=("py",)).values():
             yield item.name, posixpath.join(base_url, item.uri)
 
-    def collect(self, identifier: str, config: dict) -> CollectorItem:
+    def collect(self, identifier: str, config: MutableMapping[str, Any]) -> CollectorItem:
         """Collect the documentation tree given an identifier and selection options.
 
         In this method, we feed one line of JSON to the standard input of the subprocess that was opened
@@ -265,11 +265,11 @@ class PythonHandler(BaseHandler):
         json_input = json.dumps({"objects": [{"path": identifier, **final_config}]})
 
         logger.debug("Writing to process' stdin")
-        self.process.stdin.write(json_input + "\n")  # type: ignore
-        self.process.stdin.flush()  # type: ignore
+        self.process.stdin.write(json_input + "\n")  # type: ignore[union-attr]
+        self.process.stdin.flush()  # type: ignore[union-attr]
 
         logger.debug("Reading process' stdout")
-        stdout = self.process.stdout.readline()  # type: ignore
+        stdout = self.process.stdout.readline()  # type: ignore[union-attr]
 
         logger.debug("Loading JSON output as Python object")
         try:
@@ -304,8 +304,8 @@ class PythonHandler(BaseHandler):
         logger.debug("Tearing process down")
         self.process.terminate()
 
-    def render(self, data: CollectorItem, config: dict) -> str:  # noqa: D102 (ignore missing docstring)
-        final_config = ChainMap(config, self.default_config)
+    def render(self, data: CollectorItem, config: Mapping[str, Any]) -> str:  # noqa: D102 (ignore missing docstring)
+        final_config = ChainMap(config, self.default_config)  # type: ignore[arg-type]
 
         template = self.env.get_template(f"{data['category']}.html")
 
@@ -348,7 +348,7 @@ def get_handler(
     setup_commands: list[str] | None = None,
     config_file_path: str | None = None,
     paths: list[str] | None = None,
-    **config: Any,
+    **config: Any,  # noqa: ARG001
 ) -> PythonHandler:
     """Simply return an instance of `PythonHandler`.
 
