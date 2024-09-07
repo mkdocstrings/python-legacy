@@ -1,10 +1,11 @@
 """Tests for the `collector` module."""
+
 from unittest import mock
 
 import pytest
-from mkdocstrings_handlers.python import get_handler
-
 from mkdocstrings.handlers.base import CollectionError
+
+from mkdocstrings_handlers.python import get_handler
 
 
 @pytest.mark.parametrize(

@@ -1,12 +1,11 @@
 """Debugging utilities."""
 
-from __future__ import annotations
-
 import os
 import platform
 import sys
 from dataclasses import dataclass
 from importlib import metadata
+from typing import List, Tuple
 
 
 @dataclass
@@ -39,13 +38,13 @@ class Environment:
     """Python interpreter version."""
     platform: str
     """Operating System."""
-    packages: list[Package]
+    packages: List[Package]
     """Installed packages."""
-    variables: list[Variable]
+    variables: List[Variable]
     """Environment variables."""
 
 
-def _interpreter_name_version() -> tuple[str, str]:
+def _interpreter_name_version() -> Tuple[str, str]:
     if hasattr(sys, "implementation"):
         impl = sys.implementation.version
         version = f"{impl.major}.{impl.minor}.{impl.micro}"

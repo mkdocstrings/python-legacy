@@ -3,8 +3,6 @@
 It collects data with [`pytkdocs`](https://github.com/pawamoy/pytkdocs).
 """
 
-from __future__ import annotations
-
 import json
 import os
 import posixpath
@@ -12,7 +10,13 @@ import sys
 import traceback
 from collections import ChainMap
 from subprocess import PIPE, Popen
-from typing import TYPE_CHECKING, Any, BinaryIO, ClassVar, Iterator, Mapping, MutableMapping
+from typing import Any, BinaryIO, ClassVar, Iterator, List, Mapping, MutableMapping, Optional, Tuple
+
+from markdown import Markdown
+from mkdocstrings.extension import PluginError
+from mkdocstrings.handlers.base import BaseHandler, CollectionError, CollectorItem
+from mkdocstrings.inventory import Inventory
+from mkdocstrings.loggers import get_logger
 
 from mkdocstrings_handlers.python.rendering import (
     do_brief_xref,
@@ -21,14 +25,6 @@ from mkdocstrings_handlers.python.rendering import (
     sort_key_source,
     sort_object,
 )
-
-from mkdocstrings.extension import PluginError
-from mkdocstrings.handlers.base import BaseHandler, CollectionError, CollectorItem
-from mkdocstrings.inventory import Inventory
-from mkdocstrings.loggers import get_logger
-
-if TYPE_CHECKING:
-    from markdown import Markdown
 
 # TODO: add a deprecation warning once the new handler handles 95% of use-cases
 
@@ -123,9 +119,9 @@ class PythonHandler(BaseHandler):
     def __init__(
         self,
         *args: Any,
-        setup_commands: list[str] | None = None,
-        config_file_path: str | None = None,
-        paths: list[str] | None = None,
+        setup_commands: Optional[List[str]] = None,
+        config_file_path: Optional[str] = None,
+        paths: Optional[List[str]] = None,
         **kwargs: Any,
     ) -> None:
         """Initialize the handler.
@@ -187,8 +183,8 @@ class PythonHandler(BaseHandler):
         else:
             cmd = [sys.executable, "-m", "pytkdocs", "--line-by-line"]
 
-        self.process = Popen(
-            cmd,  # noqa: S603
+        self.process = Popen(  # noqa: S603
+            cmd,
             universal_newlines=True,
             stdout=PIPE,
             stdin=PIPE,
@@ -202,9 +198,9 @@ class PythonHandler(BaseHandler):
         cls,
         in_file: BinaryIO,
         url: str,
-        base_url: str | None = None,
+        base_url: Optional[str] = None,
         **kwargs: Any,  # noqa: ARG003
-    ) -> Iterator[tuple[str, str]]:
+    ) -> Iterator[Tuple[str, str]]:
         """Yield items and their URLs from an inventory file streamed from `in_file`.
 
         This implements mkdocstrings' `load_inventory` "protocol" (see plugin.py).
@@ -328,7 +324,7 @@ class PythonHandler(BaseHandler):
             **{"config": final_config, data["category"]: data, "heading_level": heading_level, "root": True},
         )
 
-    def get_anchors(self, data: CollectorItem) -> tuple[str, ...]:  # noqa: D102 (ignore missing docstring)
+    def get_anchors(self, data: CollectorItem) -> Tuple[str, ...]:  # noqa: D102 (ignore missing docstring)
         try:
             return (data["path"],)
         except KeyError:
@@ -344,10 +340,10 @@ class PythonHandler(BaseHandler):
 
 def get_handler(
     theme: str,
-    custom_templates: str | None = None,
-    setup_commands: list[str] | None = None,
-    config_file_path: str | None = None,
-    paths: list[str] | None = None,
+    custom_templates: Optional[str] = None,
+    setup_commands: Optional[List[str]] = None,
+    config_file_path: Optional[str] = None,
+    paths: Optional[List[str]] = None,
     **config: Any,  # noqa: ARG001
 ) -> PythonHandler:
     """Simply return an instance of `PythonHandler`.

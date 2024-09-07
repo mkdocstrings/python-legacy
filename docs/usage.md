@@ -92,8 +92,9 @@ plugins:
 These options affect how the documentation is collected from sources and renderered:
 headings, members, docstrings, etc.
 
-::: mkdocstrings_handlers.python.handler.PythonHandler.default_config
+### ::: mkdocstrings_handlers.python.handler.PythonHandler.default_config
     options:
+      show_root_heading: false
       show_root_toc_entry: false
 
 ## Supported docstrings styles
@@ -134,7 +135,7 @@ For example:
        
         ```md
         ::: my_package.my_module
-            selection:
+            options:
               docstring_style: google  # this is the default
               docstring_options:
                 replace_admonitions: no 
@@ -153,7 +154,7 @@ For example:
        
         ```md
         ::: my_package.my_module
-            selection:
+            options:
               docstring_style: google  # this is the default
               docstring_options:
                 replace_admonitions: no 
@@ -170,7 +171,7 @@ For example:
     > 
     > ```md
     > ::: my_package.my_module
-    >     selection:
+    >     options:
     >       docstring_style: google  # this is the default
     >       docstring_options:
     >         replace_admonitions: no 
@@ -183,7 +184,7 @@ with the `replace_admonitions` option of the Google-style parser:
 
 ```yaml
 ::: my_package.my_module
-    selection:
+    options:
       docstring_style: google  # this is the default
       docstring_options:
         replace_admonitions: no 
@@ -196,10 +197,10 @@ Type annotations are read both in the code and in the docstrings.
 > EXAMPLE: **Example with a function**  
 > **Expand the source at the end to see the original code!**
 >
-> ::: snippets.function_annotations_google:my_function
->     rendering:
->       show_root_heading: no
->       show_root_toc_entry: no
+> ### ::: snippets.function_annotations_google:my_function
+>     options:
+>       show_root_heading: false
+>       show_root_toc_entry: false
 
 ### Numpy-style
 
