@@ -101,7 +101,7 @@ class PythonHandler(BaseHandler):
 
     **Docstrings options:**
 
-    - `docstring_style` (`str`): The docstring style to use: `google`, `numpy`, `sphinx`, or `None`. Default: `"google"`.
+    - `docstring_style` (`str`): The docstring style to use: `google`, `numpy`, `restructured-text`, or `None`. Default: `"google"`.
     - `docstring_options` (`dict`): The options for the docstring parser. See parsers under [`pytkdocs.parsers.docstrings`][].
     - `show_if_no_docstring` (`bool`): Show the object heading even if it has no docstring or children with docstrings. Default: `False`.
 
@@ -251,7 +251,7 @@ class PythonHandler(BaseHandler):
             The collected object-tree.
         """
         final_config = {}
-        for option in ("filters", "members"):
+        for option in ("filters", "members", "docstring_style", "docstring_options"):
             if option in config:
                 final_config[option] = config[option]
             elif option in self.default_config:
