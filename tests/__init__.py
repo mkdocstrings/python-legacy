@@ -1,4 +1,4 @@
-"""Tests suite for `mkdocstrings`."""
+"""Tests suite for `mkdocstrings-python-legacy`."""
 
 from pathlib import Path
 
