@@ -5,6 +5,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.2.4](https://github.com/mkdocstrings/python-legacy/releases/tag/0.2.4) - 2024-09-07
+
+<small>[Compare with 0.2.3](https://github.com/mkdocstrings/python-legacy/compare/0.2.3...0.2.4)</small>
+
+### Bug Fixes
+
+- Pass down docstring style and options to pytkdocs ([68934d5](https://github.com/mkdocstrings/python-legacy/commit/68934d5b9050359b2742edd07eb36afe4c51b6e2) by Timothée Mazzucotelli). [Issue-4](https://github.com/mkdocstrings/python-legacy/issues/4)
+
+### Code Refactoring
+
+- Update cross-reference markup to new autorefs format ([89592bd](https://github.com/mkdocstrings/python-legacy/commit/89592bdba0597c1f637978caa19053afbfb124ad) by Matthias Schoettle). [Issue-6](https://github.com/mkdocstrings/python-legacy/issues/6), [PR-7](https://github.com/mkdocstrings/python-legacy/pull/7), Co-authored-by: Timothée Mazzucotelli <dev@pawamoy.fr>
+
 ## [0.2.3](https://github.com/mkdocstrings/python-legacy/releases/tag/0.2.3) - 2022-05-28
 
 <small>[Compare with 0.2.2](https://github.com/mkdocstrings/python-legacy/compare/0.2.2...0.2.3)</small>
