@@ -101,8 +101,6 @@ markdown_extensions:
 plugins:
 - search
 - markdown-exec
-- literate-nav:
-    nav_file: SUMMARY.md
 - coverage
 - mkdocstrings:
     handlers:
