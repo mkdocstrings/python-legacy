@@ -9,8 +9,10 @@ import posixpath
 import sys
 import traceback
 from collections import ChainMap
+from collections.abc import Iterator, Mapping, MutableMapping
+from pathlib import Path
 from subprocess import PIPE, Popen
-from typing import Any, BinaryIO, ClassVar, Iterator, List, Mapping, MutableMapping, Optional, Tuple
+from typing import Any, BinaryIO, ClassVar, Optional
 
 from markdown import Markdown
 from mkdocstrings.extension import PluginError
@@ -200,7 +202,7 @@ class PythonHandler(BaseHandler):
         url: str,
         base_url: Optional[str] = None,
         **kwargs: Any,  # noqa: ARG003
-    ) -> Iterator[Tuple[str, str]]:
+    ) -> Iterator[tuple[str, str]]:
         """Yield items and their URLs from an inventory file streamed from `in_file`.
 
         This implements mkdocstrings' `load_inventory` "protocol" (see plugin.py).
@@ -324,7 +326,7 @@ class PythonHandler(BaseHandler):
             **{"config": final_config, data["category"]: data, "heading_level": heading_level, "root": True},
         )
 
-    def get_anchors(self, data: CollectorItem) -> Tuple[str, ...]:  # noqa: D102 (ignore missing docstring)
+    def get_anchors(self, data: CollectorItem) -> tuple[str, ...]:  # noqa: D102 (ignore missing docstring)
         try:
             return (data["path"],)
         except KeyError:

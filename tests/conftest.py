@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 from collections import ChainMap
-from typing import TYPE_CHECKING, Iterator
+from typing import TYPE_CHECKING
 
 import pytest
 from markdown.core import Markdown
 from mkdocs.config.defaults import MkDocsConfig
 
 if TYPE_CHECKING:
+    from collections.abc import Iterator
     from pathlib import Path
 
     from mkdocstrings.extension import MkdocstringsExtension
@@ -78,4 +79,4 @@ def fixture_ext_markdown(plugin: MkdocstringsPlugin) -> MkdocstringsExtension:
     Returns:
         The plugin Markdown instance.
     """
-    return plugin.md  # type: ignore[attr-defined]
+    return plugin.md
