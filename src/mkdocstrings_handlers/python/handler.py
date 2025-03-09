@@ -8,17 +8,15 @@ import os
 import posixpath
 import sys
 import traceback
-from collections import ChainMap
 from collections.abc import Iterator, Mapping, MutableMapping
+from copy import deepcopy
 from pathlib import Path
 from subprocess import PIPE, Popen
 from typing import Any, BinaryIO, ClassVar, Optional
 
-from markdown import Markdown
-from mkdocstrings.extension import PluginError
-from mkdocstrings.handlers.base import BaseHandler, CollectionError, CollectorItem
-from mkdocstrings.inventory import Inventory
-from mkdocstrings.loggers import get_logger
+from mkdocs.config.defaults import MkDocsConfig
+from mkdocs.exceptions import PluginError
+from mkdocstrings import BaseHandler, CollectionError, CollectorItem, Inventory, get_logger
 
 from mkdocstrings_handlers.python.rendering import (
     do_brief_xref,
@@ -34,22 +32,21 @@ logger = get_logger(__name__)
 
 
 class PythonHandler(BaseHandler):
-    """The Python handler class.
+    """The Python handler class."""
 
-    Attributes:
-        domain: The cross-documentation domain/language for this handler.
-        enable_inventory: Whether this handler is interested in enabling the creation
-            of the `objects.inv` Sphinx inventory file.
-    """
+    name: ClassVar[str] = "python"
+    """The handler name."""
+    domain: ClassVar[str] = "py"  # to match Sphinx's default domain
+    """The domain of the handler."""
+    enable_inventory: ClassVar[bool] = True
+    """Whether the handler supports inventory files."""
 
-    domain: str = "py"  # to match Sphinx's default domain
-    enable_inventory: bool = True
-
-    fallback_theme = "material"
+    fallback_theme: ClassVar[str] = "material"
+    """The fallback theme to use when the user-selected theme is not supported."""
     fallback_config: ClassVar[dict] = {"docstring_style": "markdown", "filters": ["!.*"]}
     """The configuration used when falling back to re-collecting an object to get its anchor.
 
-    This configuration is used in [`Handlers.get_anchors`][mkdocstrings.handlers.base.Handlers.get_anchors].
+    This configuration is used in [`Handlers.get_anchors`][mkdocstrings.Handlers.get_anchors].
 
     When trying to fix (optional) cross-references, the autorefs plugin will try to collect
     an object with every configured handler until one succeeds. It will then try to get
@@ -118,14 +115,7 @@ class PythonHandler(BaseHandler):
     - `show_source` (`bool`): Show the source code of this object. Default: `True`.
     """
 
-    def __init__(
-        self,
-        *args: Any,
-        setup_commands: Optional[List[str]] = None,
-        config_file_path: Optional[str] = None,
-        paths: Optional[List[str]] = None,
-        **kwargs: Any,
-    ) -> None:
+    def __init__(self, config: dict[str, Any], base_dir: Path, **kwargs: Any) -> None:
         """Initialize the handler.
 
         When instantiating a Python handler, we open a `pytkdocs` subprocess in the background with `subprocess.Popen`.
@@ -134,24 +124,27 @@ class PythonHandler(BaseHandler):
         too resource intensive, and would slow down `mkdocstrings` a lot.
 
         Parameters:
-            *args: Handler name, theme and custom templates.
-            setup_commands: A list of python commands as strings to be executed in the subprocess before `pytkdocs`.
-            config_file_path: The MkDocs configuration file path.
-            paths: A list of paths to use as search paths.
-            **kwargs: Same thing, but with keyword arguments.
+            config: The handler configuration.
+            base_dir: The base directory of the project.
+            **kwargs: Arguments passed to the parent constructor.
         """
+        super().__init__(**kwargs)
+
+        self.base_dir = base_dir
+        self.config = config
+        self.global_options = config.get("options", {})
+
         logger.debug("Opening 'pytkdocs' subprocess")
         env = os.environ.copy()
         env["PYTHONUNBUFFERED"] = "1"
 
-        self._config_file_path = config_file_path
-        paths = paths or []
-        if not paths and config_file_path:
-            paths.append(os.path.dirname(config_file_path))
+        paths = config.get("paths") or []
+        if not paths and self.base_dir:
+            paths.append(self.base_dir)
         search_paths = []
         for path in paths:
-            if not os.path.isabs(path) and config_file_path:
-                path = os.path.abspath(os.path.join(os.path.dirname(config_file_path), path))  # noqa: PLW2901
+            if not os.path.isabs(path) and self.base_dir:
+                path = os.path.abspath(os.path.join(self.base_dir, path))  # noqa: PLW2901
             if path not in search_paths:
                 search_paths.append(path)
         self._paths = search_paths
@@ -161,7 +154,7 @@ class PythonHandler(BaseHandler):
         if search_paths:
             commands.extend([f"sys.path.insert(0, {path!r})" for path in reversed(search_paths)])
 
-        if setup_commands:
+        if setup_commands := config.get("setup_commands"):
             # prevent the Python interpreter or the setup commands
             # from writing to stdout as it would break pytkdocs output
             commands.extend(
@@ -193,7 +186,13 @@ class PythonHandler(BaseHandler):
             bufsize=-1,
             env=env,
         )
-        super().__init__(*args, **kwargs)
+
+    def get_inventory_urls(self) -> list[tuple[str, dict[str, Any]]]:
+        """Return the URLs of the inventory files to download."""
+        return [
+            (inv.pop("url"), inv) if isinstance(inv, dict) else (inv, {})
+            for inv in deepcopy(self.config.get("import", []))
+        ]
 
     @classmethod
     def load_inventory(
@@ -222,7 +221,20 @@ class PythonHandler(BaseHandler):
         for item in Inventory.parse_sphinx(in_file, domain_filter=("py",)).values():
             yield item.name, posixpath.join(base_url, item.uri)
 
-    def collect(self, identifier: str, config: MutableMapping[str, Any]) -> CollectorItem:
+    def get_options(self, local_options: Mapping[str, Any]) -> MutableMapping[str, Any]:
+        """Return the options to use to collect an object.
+
+        We merge the global options with the options specific to the object being collected.
+
+        Arguments:
+            local_options: The selection options.
+
+        Returns:
+            The options to use to collect an object.
+        """
+        return {**self.default_config, **self.global_options, **local_options}
+
+    def collect(self, identifier: str, options: MutableMapping[str, Any]) -> CollectorItem:
         """Collect the documentation tree given an identifier and selection options.
 
         In this method, we feed one line of JSON to the standard input of the subprocess that was opened
@@ -244,7 +256,7 @@ class PythonHandler(BaseHandler):
 
         Arguments:
             identifier: The dotted-path of a Python object available in the Python path.
-            config: Selection options, used to alter the data collection done by `pytkdocs`.
+            options: Selection options, used to alter the data collection done by `pytkdocs`.
 
         Raises:
             CollectionError: When there was a problem collecting the object documentation.
@@ -252,15 +264,13 @@ class PythonHandler(BaseHandler):
         Returns:
             The collected object-tree.
         """
-        final_config = {}
+        pytkdocs_options = {}
         for option in ("filters", "members", "docstring_style", "docstring_options"):
-            if option in config:
-                final_config[option] = config[option]
-            elif option in self.default_config:
-                final_config[option] = self.default_config[option]
+            if option in options:
+                pytkdocs_options[option] = options[option]
 
         logger.debug("Preparing input")
-        json_input = json.dumps({"objects": [{"path": identifier, **final_config}]})
+        json_input = json.dumps({"objects": [{"path": identifier, **pytkdocs_options}]})
 
         logger.debug("Writing to process' stdin")
         self.process.stdin.write(json_input + "\n")  # type: ignore[union-attr]
@@ -302,17 +312,16 @@ class PythonHandler(BaseHandler):
         logger.debug("Tearing process down")
         self.process.terminate()
 
-    def render(self, data: CollectorItem, config: Mapping[str, Any]) -> str:  # noqa: D102 (ignore missing docstring)
-        final_config = ChainMap(config, self.default_config)  # type: ignore[arg-type]
-
+    def render(self, data: CollectorItem, options: MutableMapping[str, Any]) -> str:
+        """Render the collected data into HTML."""
         template = self.env.get_template(f"{data['category']}.html")
 
         # Heading level is a "state" variable, that will change at each step
         # of the rendering recursion. Therefore, it's easier to use it as a plain value
         # than as an item in a dictionary.
-        heading_level = final_config["heading_level"]
-        members_order = final_config["members_order"]
+        heading_level = options["heading_level"]
 
+        members_order = options["members_order"]
         if members_order == "alphabetical":
             sort_function = sort_key_alphabetical
         elif members_order == "source":
@@ -323,17 +332,18 @@ class PythonHandler(BaseHandler):
         sort_object(data, sort_function=sort_function)
 
         return template.render(
-            **{"config": final_config, data["category"]: data, "heading_level": heading_level, "root": True},
+            **{"config": options, data["category"]: data, "heading_level": heading_level, "root": True},
         )
 
-    def get_anchors(self, data: CollectorItem) -> tuple[str, ...]:  # noqa: D102 (ignore missing docstring)
+    def get_aliases(self, identifier: str) -> tuple[str, ...]:
+        """Return the aliases of an identifier."""
         try:
+            data = self.collect(identifier, self.fallback_config)
             return (data["path"],)
-        except KeyError:
+        except (CollectionError, KeyError):
             return ()
 
-    def update_env(self, md: Markdown, config: dict) -> None:  # noqa: D102 (ignore missing docstring)
-        super().update_env(md, config)
+    def update_env(self, config: dict) -> None:  # noqa: ARG002,D102
         self.env.trim_blocks = True
         self.env.lstrip_blocks = True
         self.env.keep_trailing_newline = False
@@ -341,31 +351,18 @@ class PythonHandler(BaseHandler):
 
 
 def get_handler(
-    theme: str,
-    custom_templates: Optional[str] = None,
-    setup_commands: Optional[List[str]] = None,
-    config_file_path: Optional[str] = None,
-    paths: Optional[List[str]] = None,
-    **config: Any,  # noqa: ARG001
+    handler_config: MutableMapping[str, Any],
+    tool_config: MkDocsConfig,
+    **kwargs: Any,
 ) -> PythonHandler:
     """Simply return an instance of `PythonHandler`.
 
     Arguments:
-        theme: The theme to use when rendering contents.
-        custom_templates: Directory containing custom templates.
-        setup_commands: A list of commands as strings to be executed in the subprocess before `pytkdocs`.
-        config_file_path: The MkDocs configuration file path.
-        paths: A list of paths to use as search paths.
-        config: Configuration passed to the handler.
+        handler_config: The handler configuration.
+        tool_config: The tool (SSG) configuration.
 
     Returns:
         An instance of `PythonHandler`.
     """
-    return PythonHandler(
-        handler="python",
-        theme=theme,
-        custom_templates=custom_templates,
-        setup_commands=setup_commands,
-        config_file_path=config_file_path,
-        paths=paths,
-    )
+    base_dir = Path(tool_config.config_file_path or "./mkdocs.yml").parent
+    return PythonHandler(config=dict(handler_config), base_dir=base_dir, **kwargs)

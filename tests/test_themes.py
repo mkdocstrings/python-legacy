@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 if TYPE_CHECKING:
-    from mkdocstrings.plugin import MkdocstringsPlugin
+    from mkdocstrings import MkdocstringsPlugin
 
 
 @pytest.mark.parametrize(
@@ -39,6 +39,7 @@ def test_render_themes_templates(module: str, plugin: MkdocstringsPlugin) -> Non
         plugin: The plugin instance (parametrized fixture).
     """
     handler = plugin.handlers.get_handler("python")
-    handler._update_env(plugin.md, plugin.handlers._config)
-    data = handler.collect(module, {})
-    handler.render(data, {})
+    handler._update_env(plugin.md, config=plugin.handlers._tool_config)  # type: ignore[attr-defined]
+    options = handler.get_options({})
+    data = handler.collect(module, options)
+    handler.render(data, options)

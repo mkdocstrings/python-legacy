@@ -3,9 +3,13 @@
 from unittest import mock
 
 import pytest
-from mkdocstrings.handlers.base import CollectionError
+from mkdocstrings import CollectionError
 
 from mkdocstrings_handlers.python import get_handler
+
+
+class _FakeMkDocsConfig:
+    config_file_path = "mkdocs.yml"
 
 
 @pytest.mark.parametrize(
@@ -26,6 +30,6 @@ def test_collect_result_error(retval: dict, exp_res: str) -> None:
     with mock.patch("mkdocstrings_handlers.python.handler.json.loads") as m_loads:  # noqa: SIM117
         with pytest.raises(CollectionError) as excinfo:  # noqa: PT012
             m_loads.return_value = retval
-            handler = get_handler("material")
+            handler = get_handler({}, _FakeMkDocsConfig, theme="material")  # type: ignore[arg-type]
             assert handler.collect("", {})
             assert str(excinfo.value) == exp_res

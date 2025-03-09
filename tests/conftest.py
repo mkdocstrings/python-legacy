@@ -13,8 +13,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterator
     from pathlib import Path
 
-    from mkdocstrings.extension import MkdocstringsExtension
-    from mkdocstrings.plugin import MkdocstringsPlugin
+    from mkdocstrings import MkdocstringsExtension, MkdocstringsPlugin
 
 
 @pytest.fixture(name="mkdocs_conf")
@@ -79,4 +78,4 @@ def fixture_ext_markdown(plugin: MkdocstringsPlugin) -> MkdocstringsExtension:
     Returns:
         The plugin Markdown instance.
     """
-    return plugin.md
+    return plugin.md  # type: ignore[attr-defined]

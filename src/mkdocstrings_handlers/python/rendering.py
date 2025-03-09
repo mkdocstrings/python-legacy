@@ -4,8 +4,7 @@ import sys
 from typing import Any, Callable
 
 from markupsafe import Markup
-from mkdocstrings.handlers.base import CollectorItem
-from mkdocstrings.loggers import get_logger
+from mkdocstrings import CollectorItem, get_logger
 
 log = get_logger(__name__)
 
