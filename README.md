@@ -62,7 +62,7 @@ dependencies = [
   [pytkdocs](https://github.com/mkdocstrings/pytkdocs).
 
 - **Support for type annotations:** pytkdocs collects your type annotations and *mkdocstrings* uses them
-  to display parameters types or return types. 
+  to display parameters types or return types.
 
 - **Recursive documentation of Python objects:** just use the module dotted-path as identifier, and you get the full
   module docs. You don't need to inject documentation for each class, function, etc.
