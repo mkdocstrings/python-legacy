@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.2.5](https://github.com/mkdocstrings/python-legacy/releases/tag/0.2.5) - 2025-03-09
+
+<small>[Compare with 0.2.4](https://github.com/mkdocstrings/python-legacy/compare/0.2.4...0.2.5)</small>
+
+### Build
+
+- Depend on mkdocstrings 0.28.3 ([a2317df](https://github.com/mkdocstrings/python-legacy/commit/a2317df0e27d9ae600bb04843871e3b2f7763c94) by Timothée Mazzucotelli).
+- Drop support for Python 3.8 ([2907379](https://github.com/mkdocstrings/python-legacy/commit/290737942189e5f285f170f2d1bb227f82a6017c) by Timothée Mazzucotelli).
+
 ## [0.2.4](https://github.com/mkdocstrings/python-legacy/releases/tag/0.2.4) - 2024-09-07
 
 <small>[Compare with 0.2.3](https://github.com/mkdocstrings/python-legacy/compare/0.2.3...0.2.4)</small>
