@@ -39,6 +39,6 @@ def test_render_themes_templates(module: str, plugin: MkdocstringsPlugin) -> Non
         plugin: The plugin instance (parametrized fixture).
     """
     handler = plugin.handlers.get_handler("python")
-    handler._update_env(plugin.md, plugin.handlers._config)  # type: ignore[attr-defined]
+    handler._update_env(plugin.md, plugin.handlers._config)
     data = handler.collect(module, {})
     handler.render(data, {})
