@@ -10,7 +10,7 @@ import griffe
 import pytest
 from mkdocstrings.inventory import Inventory
 
-import mkdocstrings_handlers
+from mkdocstrings_handlers import python
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -19,19 +19,19 @@ if TYPE_CHECKING:
 @pytest.fixture(name="loader", scope="module")
 def _fixture_loader() -> griffe.GriffeLoader:
     loader = griffe.GriffeLoader()
-    loader.load("mkdocstrings_handlers")
+    loader.load("mkdocstrings_handlers.python")
     loader.resolve_aliases()
     return loader
 
 
 @pytest.fixture(name="internal_api", scope="module")
 def _fixture_internal_api(loader: griffe.GriffeLoader) -> griffe.Module:
-    return loader.modules_collection["mkdocstrings_handlers._internal"]
+    return loader.modules_collection["mkdocstrings_handlers.python._internal"]
 
 
 @pytest.fixture(name="public_api", scope="module")
 def _fixture_public_api(loader: griffe.GriffeLoader) -> griffe.Module:
-    return loader.modules_collection["mkdocstrings_handlers"]
+    return loader.modules_collection["mkdocstrings_handlers.python"]
 
 
 def _yield_public_objects(
@@ -50,7 +50,7 @@ def _yield_public_objects(
                 if modules:
                     yield member
                 yield from _yield_public_objects(
-                    member,  # type: ignore[arg-type]
+                    member,
                     modules=modules,
                     modulelevel=modulelevel,
                     inherited=inherited,
@@ -62,7 +62,7 @@ def _yield_public_objects(
                 continue
             if member.is_class and not modulelevel:
                 yield from _yield_public_objects(
-                    member,  # type: ignore[arg-type]
+                    member,
                     modules=modules,
                     modulelevel=False,
                     inherited=inherited,
@@ -97,11 +97,11 @@ def _fixture_inventory() -> Inventory:
 
 
 def test_exposed_objects(modulelevel_internal_objects: list[griffe.Object | griffe.Alias]) -> None:
-    """All public objects in the internal API are exposed under `mkdocstrings_handlers`."""
+    """All public objects in the internal API are exposed under `mkdocstrings_handlers.python`."""
     not_exposed = [
         obj.path
         for obj in modulelevel_internal_objects
-        if obj.name not in mkdocstrings_handlers.__all__ or not hasattr(mkdocstrings_handlers, obj.name)
+        if obj.name not in python.__all__ or not hasattr(python, obj.name)
     ]
     assert not not_exposed, "Objects not exposed:\n" + "\n".join(sorted(not_exposed))
 
@@ -122,7 +122,7 @@ def test_single_locations(public_api: griffe.Module) -> None:
         return obj.is_public and (obj.parent is None or _public_path(obj.parent))
 
     multiple_locations = {}
-    for obj_name in mkdocstrings_handlers.__all__:
+    for obj_name in python.__all__:
         obj = public_api[obj_name]
         if obj.aliases and (
             public_aliases := [path for path, alias in obj.aliases.items() if path != obj.path and _public_path(alias)]
@@ -152,6 +152,7 @@ def test_inventory_matches_api(
     not_in_api = []
     public_api_paths = {obj.path for obj in public_objects}
     public_api_paths.add("mkdocstrings_handlers")
+    public_api_paths.add("mkdocstrings_handlers.python")
     for item in inventory.values():
         if item.domain == "py" and "(" not in item.name:
             obj = loader.modules_collection[item.name]
