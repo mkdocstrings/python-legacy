@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.2.6](https://github.com/mkdocstrings/python-legacy/releases/tag/0.2.6) - 2025-03-22
+
+<small>[Compare with 0.2.5](https://github.com/mkdocstrings/python-legacy/compare/0.2.5...0.2.6)</small>
+
+### Build
+
+- Add back sources to sdist/wheel ([94346e6](https://github.com/mkdocstrings/python-legacy/commit/94346e6a318983431120deb58022fa09d4dda0b8) by Timothée Mazzucotelli).
+
 ## [0.2.5](https://github.com/mkdocstrings/python-legacy/releases/tag/0.2.5) - 2025-03-09
 
 <small>[Compare with 0.2.4](https://github.com/mkdocstrings/python-legacy/compare/0.2.4...0.2.5)</small>
