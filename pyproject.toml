@@ -50,8 +50,9 @@ source = "call"
 getter = "scripts.get_version:get_version"
 
 [tool.pdm.build]
+includes = ["src/mkdocstrings_handlers"]
 # Include as much as possible in the source distribution, to help redistributors.
-excludes = ["**/.pytest_cache"]
+excludes = ["**/.pytest_cache", "**/.mypy_cache", "**/__pycache__"]
 source-includes = [
     "config",
     "docs",
