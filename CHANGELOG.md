@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [0.2.7](https://github.com/mkdocstrings/python-legacy/releases/tag/0.2.7) - 2025-05-22
+
+<small>[Compare with 0.2.6](https://github.com/mkdocstrings/python-legacy/compare/0.2.6...0.2.7)</small>
+
+### Bug Fixes
+
+- Write paths as strings, not Path instances in `sys.path.insert` commands ([d607389](https://github.com/mkdocstrings/python-legacy/commit/d6073891d05d4990f0cd064979e57d03d2de7f97) by Timothée Mazzucotelli). [Issue-mkdocstrings-766](https://github.com/mkdocstrings/mkdocstrings/issues/766)
+
 ## [0.2.6](https://github.com/mkdocstrings/python-legacy/releases/tag/0.2.6) - 2025-03-22
 
 <small>[Compare with 0.2.5](https://github.com/mkdocstrings/python-legacy/compare/0.2.5...0.2.6)</small>
