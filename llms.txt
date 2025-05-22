@@ -1,0 +1,12 @@
+# mkdocstrings-python (legacy)
+
+> A legacy Python handler for mkdocstrings.
+
+## Usage
+
+- [Overview](https://mkdocstrings.github.io/python-legacy/index.md)
+
+## API
+
+- [API reference](https://mkdocstrings.github.io/python-legacy/reference/api/index.md)
+
