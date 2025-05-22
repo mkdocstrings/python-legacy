@@ -152,7 +152,7 @@ class PythonHandler(BaseHandler):
         commands = []
 
         if search_paths:
-            commands.extend([f"sys.path.insert(0, {path!r})" for path in reversed(search_paths)])
+            commands.extend([f"sys.path.insert(0, {str(path)!r})" for path in reversed(search_paths)])
 
         if setup_commands := config.get("setup_commands"):
             # prevent the Python interpreter or the setup commands
