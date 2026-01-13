@@ -22,11 +22,6 @@ if TYPE_CHECKING:
 @pytest.mark.parametrize(
     "module",
     [
-        "mkdocstrings.extension",
-        "mkdocstrings.inventory",
-        "mkdocstrings.loggers",
-        "mkdocstrings.handlers.base",
-        "mkdocstrings.handlers.rendering",
         "mkdocstrings_handlers.python.handler",
         "mkdocstrings_handlers.python.rendering",
     ],

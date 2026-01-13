@@ -30,6 +30,13 @@ def test_collect_result_error(retval: dict, exp_res: str) -> None:
     with mock.patch("mkdocstrings_handlers.python.handler.json.loads") as m_loads:  # noqa: SIM117
         with pytest.raises(CollectionError) as excinfo:  # noqa: PT012
             m_loads.return_value = retval
-            handler = get_handler({}, _FakeMkDocsConfig, theme="material")  # type: ignore[arg-type]
+            handler = get_handler(
+                {},
+                _FakeMkDocsConfig,  # type: ignore[arg-type]
+                theme="material",
+                custom_templates=None,
+                mdx=None,
+                mdx_config=None,
+            )
             assert handler.collect("", {})
             assert str(excinfo.value) == exp_res

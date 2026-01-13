@@ -46,8 +46,6 @@ class PythonHandler(BaseHandler):
     fallback_config: ClassVar[dict] = {"docstring_style": "markdown", "filters": ["!.*"]}
     """The configuration used when falling back to re-collecting an object to get its anchor.
 
-    This configuration is used in [`Handlers.get_anchors`][mkdocstrings.Handlers.get_anchors].
-
     When trying to fix (optional) cross-references, the autorefs plugin will try to collect
     an object with every configured handler until one succeeds. It will then try to get
     an anchor for it. It's because objects can have multiple identifiers (aliases),
@@ -185,6 +183,8 @@ class PythonHandler(BaseHandler):
             stdin=PIPE,
             bufsize=-1,
             env=env,
+            encoding="utf-8",
+            text=True,
         )
 
     def get_inventory_urls(self) -> list[tuple[str, dict[str, Any]]]:
@@ -312,7 +312,7 @@ class PythonHandler(BaseHandler):
         logger.debug("Tearing process down")
         self.process.terminate()
 
-    def render(self, data: CollectorItem, options: MutableMapping[str, Any]) -> str:
+    def render(self, data: CollectorItem, options: MutableMapping[str, Any]) -> str:  # type: ignore[override]
         """Render the collected data into HTML."""
         template = self.env.get_template(f"{data['category']}.html")
 
